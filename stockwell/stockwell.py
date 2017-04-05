@@ -12,7 +12,7 @@ import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from obspy import read, Trace
-from stockwell import st
+from stockwell.lib import st
 
 # define ipshell(), if possible
 if sys.stdout.isatty():
