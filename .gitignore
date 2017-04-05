@@ -1,0 +1,16 @@
+#Build products
+stockwell.egg-info/
+dist/
+build/
+RELEASE-VERSION
+*.so
+
+# python bytecode
+*.pyc
+
+# temporary files
+*.swp
+
+# other unnecessary files
+.directory
+.DS_Store
