@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """setup.py: setuptools control."""
 import sys
-if sys.version_info >= (3, 0):
-    sys.exit('Sorry, Python 3 is not supported (yet)')
 from setuptools import setup
 from distutils.core import Extension
 try:
@@ -26,11 +24,11 @@ with open('README.md', 'rb') as f:
 
 ext_modules = []
 ext_modules.append(Extension(
-    'stmodule',
+    'st',
     sources=['stockwell/c_libs/st.c', 'stockwell/c_libs/stmodule.c'],
     include_dirs=[numpy.get_include()]))
 ext_modules.append(Extension(
-    'sinemodule',
+    'sine',
     sources=['stockwell/c_libs/sinemodule.c'],
     include_dirs=[numpy.get_include()]))
 
@@ -65,5 +63,5 @@ setup(
             'Programming Language :: Python :: 3.5',
             'Topic :: Scientific/Engineering',
             'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['obspy']
+    install_requires=['obspy > 1.0.0', 'pyfftw']
     )

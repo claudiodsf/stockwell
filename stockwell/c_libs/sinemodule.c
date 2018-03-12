@@ -1,7 +1,10 @@
 /*
  * sinemodule.c
  *
- * Downloaded from http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ * Original version downloaded from
+ *   http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ *
+ * Modified for Python3 compatibility
  */
 
 /* Riedel & Sidorenko sine tapers. */
@@ -54,8 +57,61 @@ static PyMethodDef Methods[] = {
     { NULL, NULL, 0, NULL }
 };
 
+struct module_state {
+    PyObject *error;
+};
+
+#if PY_MAJOR_VERSION >= 3
+#define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#else
+#define GETSTATE(m) (&_state)
+static struct module_state _state;
+#endif
+
+#if PY_MAJOR_VERSION >= 3
+
+static int sine_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int sine_clear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+
+static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "sine",
+        NULL,
+        sizeof(struct module_state),
+        Methods,
+        NULL,
+        sine_traverse,
+        sine_clear,
+        NULL
+};
+
+#define INITERROR return NULL
+
+PyMODINIT_FUNC
+PyInit_sine(void)
+
+#else
+#define INITERROR return
+
 void initsine()
+#endif
 {
-    Py_InitModule("sine", Methods);
-    import_array();
+#if PY_MAJOR_VERSION >= 3
+	PyObject *module = PyModule_Create(&moduledef);
+#else
+	Py_InitModule("sine", Methods);
+#endif
+	import_array();
+
+#if PY_MAJOR_VERSION >= 3
+	return module;
+#endif
 }

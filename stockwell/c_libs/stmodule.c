@@ -1,7 +1,10 @@
 /*
  * stmodule.c
  *
- * Downloaded from http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ * Original version downloaded from
+ *   http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ *
+ * Modified for Python3 compatibility
  */
 
 /* Stockwell Transform wrapper code. */
@@ -141,8 +144,61 @@ static PyMethodDef Methods[] = {
 	{ NULL, NULL, 0, NULL }
 };
 
+struct module_state {
+    PyObject *error;
+};
+
+#if PY_MAJOR_VERSION >= 3
+#define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#else
+#define GETSTATE(m) (&_state)
+static struct module_state _state;
+#endif
+
+#if PY_MAJOR_VERSION >= 3
+
+static int st_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int st_clear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+
+static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "st",
+        NULL,
+        sizeof(struct module_state),
+        Methods,
+        NULL,
+        st_traverse,
+        st_clear,
+        NULL
+};
+
+#define INITERROR return NULL
+
+PyMODINIT_FUNC
+PyInit_st(void)
+
+#else
+#define INITERROR return
+
 void initst()
+#endif
 {
+#if PY_MAJOR_VERSION >= 3
+	PyObject *module = PyModule_Create(&moduledef);
+#else
 	Py_InitModule("st", Methods);
+#endif
 	import_array();
+
+#if PY_MAJOR_VERSION >= 3
+	return module;
+#endif
 }

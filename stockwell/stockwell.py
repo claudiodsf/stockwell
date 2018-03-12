@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # stockwell
-# (c) 2011-2017 Maria Lancieri <maria.lancieri@irsn.fr>,
+# (c) 2011-2018 Maria Lancieri <maria.lancieri@irsn.fr>,
 #               Claudio Satriano <satriano@ipgp.fr>
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -176,7 +176,7 @@ def plot_stockwell(data, delta, reftime, stock, df, sacfile, decimate=1):
     basename = os.path.basename(sacfile)
     dirname = os.path.basename(os.path.dirname(os.path.abspath(sacfile)))
 
-    time = np.array(map(lambda x: x*delta, range(len(data))))
+    time = np.arange(len(data)) * delta
     time -= reftime
 
     stock_dec = stock[0::decimate, 0::decimate]
@@ -185,7 +185,7 @@ def plot_stockwell(data, delta, reftime, stock, df, sacfile, decimate=1):
     delta *= decimate
     df *= decimate
 
-    time_dec = np.array(map(lambda x: x*delta, range(ntimes)))
+    time_dec = np.arange(ntimes) * delta
     time_dec -= reftime
 
     freq = []
