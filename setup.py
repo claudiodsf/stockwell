@@ -26,7 +26,9 @@ ext_modules = []
 ext_modules.append(Extension(
     'st',
     sources=['stockwell/c_libs/st.c', 'stockwell/c_libs/stmodule.c'],
-    include_dirs=[numpy.get_include()]))
+    include_dirs=[numpy.get_include()],
+    libraries=['fftw3']
+    ))
 ext_modules.append(Extension(
     'sine',
     sources=['stockwell/c_libs/sinemodule.c'],
@@ -63,5 +65,5 @@ setup(
             'Programming Language :: Python :: 3.5',
             'Topic :: Scientific/Engineering',
             'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['obspy > 1.0.0', 'pyfftw']
+    install_requires=['obspy > 1.0.0']
     )

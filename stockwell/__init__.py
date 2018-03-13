@@ -1,4 +1,3 @@
-import pyfftw
 from .lib import st
 from .lib import sine
 
