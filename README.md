@@ -66,3 +66,9 @@ plt.show()
 ```
 You should get the following output:
 ![stockwell.png](stockwell.png)
+
+## References
+
+Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex spectrum: the S transform, IEEE Trans. Signal Process., 44(4), 998–1001, doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
+
+[S transform on Wikipedia](https://en.wikipedia.org/wiki/S_transform).
