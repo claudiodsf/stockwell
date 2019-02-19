@@ -35,7 +35,7 @@ static double gauss(int n, int m);
 
 /* Stockwell transform of the real array data. The len argument is the
 number of time points, and it need not be a power of two. The lo and hi
-arguments specify the range of frequencies to return, in Hz. If they are
+arguments specify the range of frequencies to return, in samples. If they are
 both zero, they default to lo = 0 and hi = len / 2. The result is
 returned in the complex array result, which must be preallocated, with
 n rows and len columns, where n is hi - lo + 1. For the default values of
@@ -362,4 +362,3 @@ void hilbert(int len, double *data, double *result)
 		*p++ = h[i][1] / len;
 	}
 }
-

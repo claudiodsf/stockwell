@@ -48,12 +48,12 @@ from stockwell import st
 t = np.linspace(0, 10, 5001)
 w = chirp(t, f0=12.5, f1=2.5, t1=10, method='linear')
 
-fmin = 0
-fmax = 250
-stock = st.st(w, fmin, fmax)
-dt = t[1] - t[0]
-fmin = fmin/(len(w)*dt)
-fmax = fmax/(len(w)*dt)
+fmin = 0  # Hz
+fmax = 25  # Hz
+df = 1./(t[-1]-t[0])  # sampling step in frequency domain (Hz)
+fmin_samples = int(fmin/df)
+fmax_samples = int(fmax/df)
+stock = st.st(w, fmin_samples, fmax_samples)
 extent = (t[0], t[-1], fmin, fmax)
 
 fig, ax = plt.subplots(2, 1, sharex=True)
