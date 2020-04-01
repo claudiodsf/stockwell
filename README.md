@@ -65,6 +65,7 @@ ax[1].set(xlabel='time (s)', ylabel='frequency (Hz)')
 plt.show()
 ```
 You should get the following output:
+
 ![stockwell.png](stockwell.png)
 
 You can also compute the inverse Stockwell transform, ex:
