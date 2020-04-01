@@ -67,6 +67,23 @@ plt.show()
 You should get the following output:
 ![stockwell.png](stockwell.png)
 
+You can also compute the inverse Stockwell transform, ex:
+
+```python
+inv_stock = st.ist(stock, fmin_samples, fmax_samples)
+fig, ax = plt.subplots(2, 1, sharex=True)
+ax[0].plot(t, w, label='original signal')
+ax[0].plot(t, inv_stock, label='inverse Stockwell')
+ax[0].set(ylabel='amplitude')
+ax[0].legend(loc='upper right')
+ax[1].plot(t, w - inv_stock)
+ax[1].set_xlim(0, 10)
+ax[1].set(xlabel='time (s)', ylabel='amplitude difference')
+plt.show()
+```
+![inv_stockwell.png](inv_stockwell.png)
+
+
 ## References
 
 Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex spectrum: the S transform, IEEE Trans. Signal Process., 44(4), 998–1001, doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
