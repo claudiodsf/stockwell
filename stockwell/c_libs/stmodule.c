@@ -10,7 +10,7 @@
 /* Stockwell Transform wrapper code. */
 
 #include <Python.h>
-#include <numpy/arrayobject.h>
+#include <numpy/ndarrayobject.h>
 
 extern void st(int, int, int, double *, double *);
 extern void ist(int, int, int, double *, double *);
@@ -23,7 +23,8 @@ returned; lo and hi default to 0 and n/2, resp., where n is the length of x.";
 
 static PyObject *st_wrap(PyObject *self, PyObject *args)
 {
-	int n, dim[2];
+	int n;
+	npy_intp dim[2];
 	int lo = 0;
 	int hi = 0;
 	PyObject *o;
@@ -34,7 +35,7 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 	}
 
 	a = (PyArrayObject *)
-		PyArray_ContiguousFromObject(o, PyArray_DOUBLE, 1, 1);
+		PyArray_ContiguousFromObject(o, NPY_DOUBLE, 1, 1);
 	if (a == NULL) {
 		return NULL;
 	}
@@ -46,7 +47,7 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 
 	dim[0] = hi - lo + 1;
 	dim[1] = n;
-	r = (PyArrayObject *)PyArray_FromDims(2, dim, PyArray_CDOUBLE);
+	r = (PyArrayObject *)PyArray_SimpleNew(2, dim, NPY_CDOUBLE);
 	if (r == NULL) {
 		Py_DECREF(a);
 		return NULL;
@@ -64,7 +65,8 @@ array y.";
 
 static PyObject *ist_wrap(PyObject *self, PyObject *args)
 {
-	int n, m, dim[1];
+	int n, m;
+	npy_intp dim[1];
 	int lo = 0;
 	int hi = 0;
 	PyObject *o;
@@ -75,7 +77,7 @@ static PyObject *ist_wrap(PyObject *self, PyObject *args)
 	}
 
 	a = (PyArrayObject *)
-		PyArray_ContiguousFromObject(o, PyArray_CDOUBLE, 2, 2);
+		PyArray_ContiguousFromObject(o, NPY_CDOUBLE, 2, 2);
 	if (a == NULL) {
 		return NULL;
 	}
@@ -92,7 +94,7 @@ static PyObject *ist_wrap(PyObject *self, PyObject *args)
 	}
 
 	dim[0] = m;
-	r = (PyArrayObject *)PyArray_FromDims(1, dim, PyArray_DOUBLE);
+	r = (PyArrayObject *)PyArray_SimpleNew(1, dim, NPY_DOUBLE);
 	if (r == NULL) {
 		Py_DECREF(a);
 		return NULL;
@@ -109,7 +111,8 @@ static char Doc_hilbert[] =
 
 static PyObject *hilbert_wrap(PyObject *self, PyObject *args)
 {
-	int n, dim[1];
+	int n;
+	npy_intp dim[1];
 	PyObject *o;
 	PyArrayObject *a, *r;
 
@@ -118,14 +121,14 @@ static PyObject *hilbert_wrap(PyObject *self, PyObject *args)
 	}
 
 	a = (PyArrayObject *)
-		PyArray_ContiguousFromObject(o, PyArray_DOUBLE, 1, 1);
+		PyArray_ContiguousFromObject(o, NPY_DOUBLE, 1, 1);
 	if (a == NULL) {
 		return NULL;
 	}
 	n = a->dimensions[0];
 
 	dim[0] = n;
-	r = (PyArrayObject *)PyArray_FromDims(1, dim, PyArray_CDOUBLE);
+	r = (PyArrayObject *)PyArray_SimpleNew(1, dim, NPY_CDOUBLE);
 	if (r == NULL) {
 		Py_DECREF(a);
 		return NULL;

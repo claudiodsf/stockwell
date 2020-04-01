@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <Python.h>
-#include <numpy/arrayobject.h>
+#include <numpy/ndarrayobject.h>
 
 /* Compute the kth sine taper. d is an array of length N. */
 
@@ -34,7 +34,7 @@ static char Doc_sine_taper[] =
 static PyObject *sine_taper_wrap(PyObject *self, PyObject *args)
 {
     int k, N;
-    int dim[1];
+    npy_intp dim[1];
     PyArrayObject *r;
 
     if (!PyArg_ParseTuple(args, "ii", &k, &N)) {
@@ -42,7 +42,7 @@ static PyObject *sine_taper_wrap(PyObject *self, PyObject *args)
     }
 
     dim[0] = N;
-    r = (PyArrayObject *)PyArray_FromDims(1, dim, PyArray_DOUBLE);
+    r = (PyArrayObject *)PyArray_SimpleNew(1, dim, NPY_DOUBLE);
     if (r == NULL) {
         return NULL;
     }
