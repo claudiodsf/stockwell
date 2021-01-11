@@ -51,7 +51,7 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 	if (a == NULL) {
 		return NULL;
 	}
-	n = a->dimensions[0];
+	n = (int) a->dimensions[0];
 
 	if (lo == 0 && hi == 0) {
 		hi = n / 2;
@@ -92,8 +92,8 @@ static PyObject *ist_wrap(PyObject *self, PyObject *args)
 	if (a == NULL) {
 		return NULL;
 	}
-	n = a->dimensions[0];
-	m = a->dimensions[1];
+	n = (int) a->dimensions[0];
+	m = (int) a->dimensions[1];
 
 	if (lo == 0 && hi == 0) {
 		hi = m / 2;
@@ -136,7 +136,7 @@ static PyObject *hilbert_wrap(PyObject *self, PyObject *args)
 	if (a == NULL) {
 		return NULL;
 	}
-	n = a->dimensions[0];
+	n = (int) a->dimensions[0];
 
 	dim[0] = n;
 	r = (PyArrayObject *)PyArray_SimpleNew(1, dim, NPY_CDOUBLE);

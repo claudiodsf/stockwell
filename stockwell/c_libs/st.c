@@ -3,6 +3,9 @@
  *
  * Downloaded from http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
  */
+// the following two defines are for Windows
+#define _CRT_SECURE_NO_WARNINGS
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,15 +14,27 @@
 #include "my_types.h"
 
 char *Wisfile = NULL;
-char *Wistemplate = "%s/.fftwis";
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+	const char *Wistemplate = "%s\.fftwis";
+#else
+	const char *Wistemplate = "%s/.fftwis";
+#endif
 #define WISLEN 8
 
 void set_wisfile(void)
 {
-	char *home;
+	const char *home;
 
 	if (Wisfile) return;
-	home = getenv("HOME");
+	#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+        const char *homeDrive = getenv("HOMEDRIVE");
+        const char *homePath = getenv("HOMEPATH");
+        home = malloc(strlen(homeDrive)+strlen(homePath)+1);
+        strcat(home, homeDrive);
+        strcat(home, homePath);
+	#else
+        home = getenv("HOME");
+	#endif
 	Wisfile = (char *)malloc(strlen(home) + WISLEN + 1);
 	sprintf(Wisfile, Wistemplate, home);
 }
@@ -29,7 +44,7 @@ length. */
 
 int st_freq(double f, int len, double srate)
 {
-	return floor(f * len / srate + .5);
+	return (int)floor(f * len / srate + .5);
 }
 
 static double gauss(int n, int m, double gamma);
