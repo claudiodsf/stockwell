@@ -1,46 +1,64 @@
 # Stockwell
 
-Time-frequency analysis through Stockwell transform.
+Python package for time-frequency analysis through Stockwell transform.
+
 
 ## Installation
 
+### C compiler
+
+Part of this Python package is written in C, so you will need a C compiler.
+
+On Linux (Debian or Ubuntu), install the `build-essential` package:
+
+    sudo apt install build-essential
+
+On macOS, install the XCode Command Line Tools:
+
+    xcode-select --install
+
+On Windows, install the [Microsoft C++ Build Tools].
+
+[Microsoft C++ Build Tools]:
+https://visualstudio.microsoft.com/visual-cpp-build-tools
+
+### FFTW
+
 Make sure that you have [FFTW](http://www.fftw.org) installed.
-For example:
 
-```bash
-# Using Anaconda (Linux, macOS, Windows)
-conda install fftw
+If you use Anaconda (Linux, macOS, Windows):
 
-# or using brew (macOS)
-brew install fftw
+    conda install fftw
 
-# or using apt (Debian or Ubuntu)
-sudo apt install libfftw3-dev
-```
+If you use Homebrew (macOS)
 
-Then install this python package using pip:
+    brew install fftw
 
-```bash
-pip install .
-```
+If you use `apt` (Debian or Ubuntu)
+
+    sudo apt install libfftw3-dev
+
+### Install the Python package
+
+Finally, install this Python package using pip:
+
+    pip install .
 
 Or, alternatively, in "editable" mode:
 
-```bash
-pip install -e .
-```
+    pip install -e .
+
 
 ## Usage
 
 From the command line:
 
-```bash
-stockwell file.sac
-```
+    stockwell file.sac
 
-It will produce `file.sac.pdf` with the time-frequency representation of the signal.
+It will produce `file.sac.pdf` with the time-frequency representation of the
+signal.
 
-Example usage from python:
+Example usage from Python:
 
 ```python
 import numpy as np
@@ -90,6 +108,8 @@ plt.show()
 
 ## References
 
-Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex spectrum: the S transform, IEEE Trans. Signal Process., 44(4), 998–1001, doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
+Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex
+spectrum: the S transform, IEEE Trans. Signal Process., 44(4), 998–1001,
+doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
 
 [S transform on Wikipedia](https://en.wikipedia.org/wiki/S_transform).
