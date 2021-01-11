@@ -4,6 +4,7 @@ dist/
 build/
 RELEASE-VERSION
 *.so
+*.pyd
 
 # python bytecode
 *.pyc
