@@ -8,11 +8,14 @@ Make sure that you have [FFTW](http://www.fftw.org) installed.
 For example:
 
 ```bash
-# macOS
+# Using Anaconda (Linux, macOS, Windows)
+conda install fftw
+
+# or using brew (macOS)
 brew install fftw
 
-# debian or ubuntu
-sudo apt-get install libfftw3-dev
+# or using apt (Debian or Ubuntu)
+sudo apt install libfftw3-dev
 ```
 
 Then install this python package using pip:
