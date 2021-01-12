@@ -2,8 +2,10 @@
 stockwell.egg-info/
 dist/
 build/
+wheels/
 RELEASE-VERSION
 *.so
+*.pyd
 
 # python bytecode
 *.pyc
