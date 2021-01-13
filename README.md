@@ -51,14 +51,7 @@ Or, alternatively, in "editable" mode:
 
 ## Usage
 
-From the command line:
-
-    stockwell file.sac
-
-It will produce `file.sac.pdf` with the time-frequency representation of the
-signal.
-
-Example usage from Python:
+Example usage:
 
 ```python
 import numpy as np
@@ -104,6 +97,21 @@ ax[1].set(xlabel='time (s)', ylabel='amplitude difference')
 plt.show()
 ```
 ![inv_stockwell.png](inv_stockwell.png)
+
+### Command line script
+
+The `stockwell` command line script is provided for the special
+case of seismic signal analysis. It requires the [ObsPy] library.
+
+Here's an example script usage, on a [SAC] file:
+
+    stockwell file.sac
+
+It will produce `file.sac.pdf` with the time-frequency representation of
+the signal.
+
+[ObsPy]: http://obspy.org
+[SAC]: http://ds.iris.edu/files/sac-manual/
 
 
 ## References

@@ -1,17 +1,23 @@
 #!/usr/bin/env python
 # stockwell
-# (c) 2011-2018 Maria Lancieri <maria.lancieri@irsn.fr>,
+# (c) 2011-2021 Maria Lancieri <maria.lancieri@irsn.fr>,
 #               Claudio Satriano <satriano@ipgp.fr>
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import sys
 import os
+try:
+    from obspy import read, Trace
+except Exception:
+    sys.stderr.write(
+        'ObsPy is required to run this script. Please install it and retry.\n'
+        'Installation instructions on https://obspy.org.\n')
+    sys.exit(1)
 from optparse import OptionParser
 import numpy as np
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
-from obspy import read, Trace
 try:
     from stockwell.lib import st
 except Exception:
