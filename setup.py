@@ -76,5 +76,4 @@ setup(
             'Programming Language :: Python :: 3.5',
             'Topic :: Scientific/Engineering',
             'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['obspy > 1.0.0']
     )
