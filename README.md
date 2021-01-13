@@ -2,6 +2,10 @@
 
 Python package for time-frequency analysis through Stockwell transform.
 
+Based on original code from [NIMH MEG Core Facility].
+
+[NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
+
 
 ## Installation
 
