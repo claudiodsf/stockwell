@@ -2,7 +2,11 @@
  * stmodule.c
  *
  * Original version downloaded from
- *   http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ * http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ *
+ * The contents of this file is free and unencumbered software released
+ * into the public domain. For more information, please refer to
+ * https://unlicense.org
  *
  * Modified for Python3 compatibility
  */
