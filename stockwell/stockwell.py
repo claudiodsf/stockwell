@@ -1,7 +1,14 @@
 #!/usr/bin/env python
-# stockwell
-# (c) 2011-2021 Maria Lancieri <maria.lancieri@irsn.fr>,
-#               Claudio Satriano <satriano@ipgp.fr>
+"""
+Time-frequency plot of seismic traces.
+
+:copyright:
+    2011-2021 Maria Lancieri <maria.lancieri@irsn.fr>,
+              Claudio Satriano <satriano@ipgp.fr>
+:license:
+    CeCILL Free Software License Agreement, Version 2.1
+    (http://www.cecill.info/index.en.html)
+"""
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import sys

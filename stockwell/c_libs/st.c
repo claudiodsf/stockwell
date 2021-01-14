@@ -1,8 +1,16 @@
 /*
  * st.c
  *
- * Downloaded from http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ * Original version downloaded from
+ * http://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+ *
+ * The contents of this file is free and unencumbered software released
+ * into the public domain. For more information, please refer to
+ * https://unlicense.org
+ *
+ * Modified for Windows compatibility
  */
+
 // the following two defines are for Windows
 #define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
