@@ -64,8 +64,8 @@ setup(
             'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
             'Intended Audience :: Science/Research',
-            'License :: OSI Approved :: CeCILL Free Software License '
-                'Agreement, Version 2.1',
+            'License :: OSI Approved :: CEA CNRS Inria Logiciel Libre '
+                'License, version 2.1 (CeCILL-2.1)',
             'Operating System :: OS Independent',
             'Programming Language :: Python',
             'Programming Language :: Python :: 2',
