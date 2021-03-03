@@ -49,8 +49,6 @@ setup(
     name='stockwell',
     packages=['stockwell'],
     include_package_data=True,
-    entry_points={
-        'console_scripts': ['stockwell = stockwell.stockwell:main']},
     # version=get_git_version(),
     version=1.0,
     ext_package='stockwell.lib',
