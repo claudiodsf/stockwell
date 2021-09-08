@@ -9,6 +9,6 @@ python setup.py bdist_wheel
 cd %OLDPWD%
 for %%i in (..\dist\*.whl) do (
     python .\wheel_repair.py ^
-        -d %userprofile%\anaconda3\Library\bin -w ../wheels %%i
+        -d "%userprofile%\anaconda3\Library\bin" -w ../wheels %%i
 )
 rmdir ..\dist /q /s
