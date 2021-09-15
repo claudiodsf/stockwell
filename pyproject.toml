@@ -16,3 +16,5 @@ before-all = 'brew install fftw'
 
 [tool.cibuildwheel.windows]
 before-all = '%CONDA%\Scripts\conda.exe install fftw'
+before-build = 'pip install delvewheel'
+repair-wheel-command = 'delvewheel repair --add-path %CONDA%\Library\bin -w {dest_dir} {wheel}'
