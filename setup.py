@@ -9,7 +9,6 @@ try:
 except ImportError:
     sys.exit('NumPy is required for installation. Please install it first.')
 # Import the version string.
-import sys
 sys.path[0:0] = ['stockwell']
 from version import __version__
 
@@ -30,6 +29,12 @@ if 'CONDA_PREFIX' in os.environ:
         os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'include'))
     library_dirs_st.append(
         os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'lib'))
+# This is needed for Miniconda on GitHub-hosted Windows runner
+if 'CONDA' in os.environ:
+    include_dirs_st.append(
+        os.path.join(os.environ['CONDA'], 'Library', 'include'))
+    library_dirs_st.append(
+        os.path.join(os.environ['CONDA'], 'Library', 'lib'))
 
 ext_modules = []
 ext_modules.append(Extension(
