@@ -4,6 +4,9 @@ requires = [
     'numpy'
 ]
 
+[tool.cibuildwheel]
+build = ['cp36-*', 'cp37-*', 'cp38-*']
+
 [tool.cibuildwheel.linux]
 before-all = 'yum install -y fftw-devel'
 
