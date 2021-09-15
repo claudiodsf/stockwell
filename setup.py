@@ -14,7 +14,13 @@ sys.path[0:0] = ['stockwell']
 from version import __version__
 
 with open('README.md', 'rb') as f:
-    long_descr = f.read().decode('utf-8')
+    long_descr = f.read().decode('utf-8').replace(
+        '(stockwell.png)',
+        '(https://cdn.jsdelivr.net/gh/claudiodsf/stockwell/stockwell.png)'
+    ).replace(
+        '(inv_stockwell.png)',
+        '(https://cdn.jsdelivr.net/gh/claudiodsf/stockwell/inv_stockwell.png)'
+    )
 
 include_dirs_st = [numpy.get_include()]
 library_dirs_st = []
