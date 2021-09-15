@@ -6,9 +6,13 @@ requires = [
 
 [tool.cibuildwheel]
 build = ['cp36-*', 'cp37-*', 'cp38-*']
+skip = '*-win32'
 
 [tool.cibuildwheel.linux]
 before-all = 'yum install -y fftw-devel'
 
 [tool.cibuildwheel.macos]
 before-all = 'brew install fftw'
+
+[tool.cibuildwheel.windows]
+before-all = '%CONDA%\Scripts\conda.exe install fftw'
