@@ -9,9 +9,29 @@ Based on original code from [NIMH MEG Core Facility].
 
 ## Installation
 
-### C compiler
+### Using pip and PyPI (preferred method)
 
-Part of this Python package is written in C, so you will need a C compiler.
+The latest release of Stockwell is available on the
+[Python Package Index](https://pypi.org/project/stockwell/).
+
+You can install it easily through `pip`:
+
+    pip install stockwell
+
+
+### Installation from source
+
+If no precompiled package is available for you architecture on PyPI, or if you
+want to work on the source code, you will need to compile this package from
+source.
+
+To obtain the source code, download the latest release from the [releases
+page](https://github.com/claudiodsf/stockwell/releases), or clone the GitHub
+project.
+
+#### C compiler
+
+Part of Stockwell is written in C, so you will need a C compiler.
 
 On Linux (Debian or Ubuntu), install the `build-essential` package:
 
@@ -26,9 +46,10 @@ On Windows, install the [Microsoft C++ Build Tools].
 [Microsoft C++ Build Tools]:
 https://visualstudio.microsoft.com/visual-cpp-build-tools
 
-### FFTW
+#### FFTW
 
-Make sure that you have [FFTW](http://www.fftw.org) installed.
+To compile Stockwell, you will need to have [FFTW](http://www.fftw.org)
+installed.
 
 If you use Anaconda (Linux, macOS, Windows):
 
@@ -42,7 +63,7 @@ If you use `apt` (Debian or Ubuntu)
 
     sudo apt install libfftw3-dev
 
-### Install the Python package
+#### Install the Python package from source
 
 Finally, install this Python package using pip:
 
