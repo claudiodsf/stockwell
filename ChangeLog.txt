@@ -1,8 +1,12 @@
 Stockwell - Time-frequency analysis through Stockwell transform.
 (c) 2021 Claudio Satriano <satriano@ipgp.fr>
 
+v1.0.2 - 2021-09-15
+	- Updated install instructions in README
+	- Copy FFTW3 dynamic library into macOS wheel
+
 v1.0.1 - 2021-09-15
-        - Add numpy dependency
+	- Add numpy dependency
 
 v1.0 - 2021-09-15
-        - Initial release
+	- Initial release
