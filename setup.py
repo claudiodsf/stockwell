@@ -8,16 +8,10 @@ try:
     import numpy
 except ImportError:
     sys.exit('NumPy is required for installation. Please install it first.')
-
-# import inspect
-# import os
-# import sys
-
 # Import the version string.
-# path = os.path.join(os.path.abspath(os.path.dirname(inspect.getfile(
-#     inspect.currentframe()))), 'stockwell')
-# sys.path.insert(0, path)
-# from version import get_git_version
+import sys
+sys.path[0:0] = ['stockwell']
+from version import __version__
 
 with open('README.md', 'rb') as f:
     long_descr = f.read().decode('utf-8')
@@ -49,12 +43,12 @@ setup(
     name='stockwell',
     packages=['stockwell'],
     include_package_data=True,
-    # version=get_git_version(),
-    version=1.0,
+    version=__version__,
     ext_package='stockwell.lib',
     ext_modules=ext_modules,
     description='Time-frequency analysis through Stockwell transform',
     long_description=long_descr,
+    long_description_content_type='text/markdown',
     author='Claudio Satriano',
     author_email='satriano@ipgp.fr',
     url='http://www.ipgp.fr/~satriano',
