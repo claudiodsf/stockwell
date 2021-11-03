@@ -1,6 +1,9 @@
 Stockwell - Time-frequency analysis through Stockwell transform.
 (c) 2021 Claudio Satriano <satriano@ipgp.fr>
 
+unreleased
+	- Use versioneer to generate package version
+
 v1.0.3 - 2021-09-15
 	- Automated wheel building and deploy to PyPI
 

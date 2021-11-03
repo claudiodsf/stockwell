@@ -4,13 +4,11 @@ import sys
 import os
 from setuptools import setup
 from distutils.core import Extension
+import versioneer
 try:
     import numpy
 except ImportError:
     sys.exit('NumPy is required for installation. Please install it first.')
-# Import the version string.
-sys.path[0:0] = ['stockwell']
-from version import __version__
 
 with open('README.md', 'rb') as f:
     long_descr = f.read().decode('utf-8').replace(
@@ -54,7 +52,8 @@ setup(
     name='stockwell',
     packages=['stockwell'],
     include_package_data=True,
-    version=__version__,
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     ext_package='stockwell.lib',
     ext_modules=ext_modules,
     description='Time-frequency analysis through Stockwell transform',

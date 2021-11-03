@@ -2,3 +2,5 @@ include README.md
 include LICENSE.txt
 include CONTRIBUTORS.txt
 include stockwell/lib/__init__.py
+include versioneer.py
+include stockwell/_version.py
