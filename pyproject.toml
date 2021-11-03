@@ -8,6 +8,9 @@ requires = [
 [tool.cibuildwheel]
 build = ['cp36-*', 'cp37-*', 'cp38-*']
 skip = '*-win32'
+test-requires = 'pytest'
+test-command = 'pytest --pyargs stockwell'
+test-skip = '*-win_amd64'
 
 [tool.cibuildwheel.linux]
 before-all = 'yum install -y fftw-devel'

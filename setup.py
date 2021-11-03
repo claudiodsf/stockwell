@@ -50,7 +50,7 @@ ext_modules.append(Extension(
 
 setup(
     name='stockwell',
-    packages=['stockwell'],
+    packages=['stockwell', 'stockwell.tests'],
     include_package_data=True,
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
