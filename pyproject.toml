@@ -10,7 +10,6 @@ build = ['cp36-*', 'cp37-*', 'cp38-*']
 skip = '*-win32'
 test-requires = 'pytest'
 test-command = 'pytest --pyargs stockwell'
-test-skip = '*-win_amd64'
 
 [tool.cibuildwheel.linux]
 before-all = 'yum install -y fftw-devel'
@@ -22,3 +21,5 @@ before-all = 'brew install fftw'
 before-all = '%CONDA%\Scripts\conda.exe install fftw'
 before-build = 'pip install delvewheel'
 repair-wheel-command = 'delvewheel repair --add-path %CONDA%\Library\bin -w {dest_dir} {wheel}'
+test-requires = 'nose'
+test-command = 'nosetests stockwell'
