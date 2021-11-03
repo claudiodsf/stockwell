@@ -11,6 +11,7 @@ Based on original code from [NIMH MEG Core Facility].
 
 ## unreleased
 - Use `versioneer` to generate package version
+- Add tests
 
 
 ## v1.0.3 - 2021-09-15
