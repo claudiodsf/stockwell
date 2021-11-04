@@ -15,7 +15,7 @@ jobs:
       
       - name: Fetch tags
         run: |
-          git fetch --prune --unshallow --tags
+          git fetch --prune --unshallow --tags -f
           echo exit code $?
           git tag --list
 
@@ -34,7 +34,7 @@ jobs:
 
       - name: Fetch tags
         run: |
-          git fetch --prune --unshallow --tags
+          git fetch --prune --unshallow --tags -f
           echo exit code $?
           git tag --list
 

@@ -9,7 +9,7 @@ Based on original code from [NIMH MEG Core Facility].
 (c) 2021 Claudio Satriano <satriano@ipgp.fr>
 
 
-## unreleased
+## v1.0.4 - 2021-11-04
 - Use `versioneer` to generate package version
 - Add tests
 
