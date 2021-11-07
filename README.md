@@ -4,15 +4,27 @@ Python package for time-frequency analysis through Stockwell transform.
 
 Based on original code from [NIMH MEG Core Facility].
 
-[NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
+[![cf-badge]][cf-link]
+[![PyPI-badge]][PyPI-link]
+[![license-badge]][license-link]
 
 
 ## Installation
 
-### Using pip and PyPI (preferred method)
+### Using Anaconda
+
+If you use [Anaconda], the latest release of Stockwell is available via
+[conda-forge][cf-link].
+
+To install, simply run:
+
+    conda install -c conda-forge stockwell
+
+
+### Using pip and PyPI
 
 The latest release of Stockwell is available on the
-[Python Package Index](https://pypi.org/project/stockwell/).
+[Python Package Index][PyPI-link].
 
 You can install it easily through `pip`:
 
@@ -25,9 +37,8 @@ If no precompiled package is available for you architecture on PyPI, or if you
 want to work on the source code, you will need to compile this package from
 source.
 
-To obtain the source code, download the latest release from the [releases
-page](https://github.com/claudiodsf/stockwell/releases), or clone the GitHub
-project.
+To obtain the source code, download the latest release from the
+[releases page][releases-link], or clone the GitHub project.
 
 #### C compiler
 
@@ -43,15 +54,12 @@ On macOS, install the XCode Command Line Tools:
 
 On Windows, install the [Microsoft C++ Build Tools].
 
-[Microsoft C++ Build Tools]:
-https://visualstudio.microsoft.com/visual-cpp-build-tools
-
 #### FFTW
 
-To compile Stockwell, you will need to have [FFTW](http://www.fftw.org)
+To compile Stockwell, you will need to have [FFTW]
 installed.
 
-If you use Anaconda (Linux, macOS, Windows):
+If you use [Anaconda]&nbsp;(Linux, macOS, Windows):
 
     conda install fftw
 
@@ -130,4 +138,22 @@ Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex
 spectrum: the S transform, IEEE Trans. Signal Process., 44(4), 998–1001,
 doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
 
-[S transform on Wikipedia](https://en.wikipedia.org/wiki/S_transform).
+[S transform on Wikipedia].
+
+
+
+[NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell
+
+[cf-badge]: http://img.shields.io/conda/vn/conda-forge/stockwell.svg
+[cf-link]: https://anaconda.org/conda-forge/stockwell
+[PyPI-badge]: http://img.shields.io/pypi/v/stockwell.svg
+[PyPI-link]: https://pypi.python.org/pypi/stockwell
+[license-badge]: https://img.shields.io/badge/license-CeCILL--2.1-green
+[license-link]: http://www.cecill.info/licences.en.html
+[releases-link]: https://github.com/claudiodsf/stockwell/releases
+
+[Anaconda]: https://www.anaconda.com/products/individual
+[Microsoft C++ Build Tools]:
+https://visualstudio.microsoft.com/visual-cpp-build-tools
+[FFTW]: http://www.fftw.org
+[S transform on Wikipedia]: https://en.wikipedia.org/wiki/S_transform
