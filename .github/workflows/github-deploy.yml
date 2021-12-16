@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Fetch tags
         run: |
           git fetch --prune --unshallow --tags -f
@@ -20,7 +20,7 @@ jobs:
           git tag --list
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.1.2
+        uses: pypa/cibuildwheel@v2.2.2
 
       - uses: actions/upload-artifact@v2
         with:
@@ -68,4 +68,3 @@ jobs:
           user: claudiodsf
           password: ${{ secrets.pypi_password }}
           # To test: repository_url: https://test.pypi.org/legacy/
-
