@@ -23,14 +23,19 @@ extern void ist(int, int, int, double *, double *);
 extern void hilbert(int, double *, double *);
 
 static char Doc_st[] =
-"st(x[, gamma, window type, lo, hi]) returns the 2d, complex Stockwell transform of the real\n\
-array x. If lo and hi are specified, only those frequencies (rows) are\n\
-returned; lo and hi default to 0 and n/2, resp., where n is the length of x.\n\
-Gamma coeficcfent is set default to 1. Gamma is the adjustable parameter, \n\
-which has been defined to tune the time and frequency resolutions of the S-transform. \n\
-It presents the number of Fourier sinusoidal periods within one standard deviation of the Gaussian window. \n\
-Raising gamma increases the frequency resolution and consequently decreases the time resolution of the S-transform and vice versa (Kazemi, 2014). \n\
-Two window types available: gauss (default) and kazemi (Kazemi, 2014).";
+"st(x, lo=0, hi=0, gamma=1, win_type='gauss')\n--\n\n\
+Returns the 2d, complex Stockwell transform of the real array `x`.\n\
+\n\
+If `lo` and `hi` are specified, only those frequencies (rows) are returned;\n\
+If `hi` is 0, then it will be set to n/2, where n is the length of `x`.\n\
+\n\
+The parameter `gamma` (default 1) can be used to tune the time and frequency\n\
+resolutions of the S-transform. It represents the number of Fourier sinusoidal\n\
+periods within one standard deviation of the Gaussian window.\n\
+Raising gamma increases the frequency resolution and consequently decreases\n\
+the time resolution of the S-transform and vice versa (Kazemi, 2014).\n\
+\n\
+Two `win_type` are available: 'gauss' (default) and 'kazemi' (Kazemi, 2014).";
 
 static PyObject *st_wrap(PyObject *self, PyObject *args)
 {
@@ -39,12 +44,12 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 	int lo = 0;
 	int hi = 0;
 	double gamma = 1;
-	char *win_type;
+	char *win_type = "gauss";
 	char buff[10];
 	PyObject *o;
 	PyArrayObject *a, *r;
 	enum WINDOW window_type = GAUSS;
-	if (!PyArg_ParseTuple(args, "O|sdii", &o, &win_type, &gamma, &lo, &hi)) {
+	if (!PyArg_ParseTuple(args, "O|iids", &o, &lo, &hi, &gamma, &win_type)) {
 		return NULL;
 	}
 	if(strcmp(win_type, "kazemi") == 0){
