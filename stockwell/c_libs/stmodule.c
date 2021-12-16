@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <Python.h>
 #include <numpy/ndarrayobject.h>
-#include "my_types.h"
+#include "st_types.h"
 
 extern void st(int, int, int, double, enum WINDOW window_code, double *, double *);
 extern void ist(int, int, int, double *, double *);

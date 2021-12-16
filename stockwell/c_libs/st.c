@@ -19,7 +19,7 @@
 #include <string.h>
 #include <math.h>
 #include <fftw3.h>
-#include "my_types.h"
+#include "st_types.h"
 
 char *Wisfile = NULL;
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -81,7 +81,7 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 	{
 		window_function = &kazemi;
 	}
-	
+
 	/* Check for frequency defaults. */
 
 	if (lo == 0 && hi == 0) {
