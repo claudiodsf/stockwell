@@ -80,8 +80,8 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 }
 
 static char Doc_ist[] =
-"ist(y[, lo, hi]) returns the inverse Stockwell transform of the 2d, complex\n\
-array y.";
+"ist(y, lo=0, hi=0)\n--\n\n\
+Returns the inverse Stockwell transform of the 2d, complex array y.\n";
 
 static PyObject *ist_wrap(PyObject *self, PyObject *args)
 {
@@ -127,7 +127,8 @@ static PyObject *ist_wrap(PyObject *self, PyObject *args)
 }
 
 static char Doc_hilbert[] =
-"hilbert(x) returns the complex Hilbert transform of the real array x.";
+"hilbert(x)\n--\n\n\
+Returns the complex Hilbert transform of the real array x.";
 
 static PyObject *hilbert_wrap(PyObject *self, PyObject *args)
 {
