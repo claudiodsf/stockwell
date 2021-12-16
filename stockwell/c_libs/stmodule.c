@@ -12,18 +12,30 @@
  */
 
 /* Stockwell Transform wrapper code. */
-
+#include <string.h>
+#include <stdio.h>
 #include <Python.h>
 #include <numpy/ndarrayobject.h>
+#include "st_types.h"
 
-extern void st(int, int, int, double *, double *);
+extern void st(int, int, int, double, enum WINDOW window_code, double *, double *);
 extern void ist(int, int, int, double *, double *);
 extern void hilbert(int, double *, double *);
 
 static char Doc_st[] =
-"st(x[, lo, hi]) returns the 2d, complex Stockwell transform of the real\n\
-array x. If lo and hi are specified, only those frequencies (rows) are\n\
-returned; lo and hi default to 0 and n/2, resp., where n is the length of x.";
+"st(x, lo=0, hi=0, gamma=1, win_type='gauss')\n--\n\n\
+Returns the 2d, complex Stockwell transform of the real array `x`.\n\
+\n\
+If `lo` and `hi` are specified, only those frequencies (rows) are returned;\n\
+If `hi` is 0, then it will be set to n/2, where n is the length of `x`.\n\
+\n\
+The parameter `gamma` (default 1) can be used to tune the time and frequency\n\
+resolutions of the S-transform. It represents the number of Fourier sinusoidal\n\
+periods within one standard deviation of the Gaussian window.\n\
+Raising gamma increases the frequency resolution and consequently decreases\n\
+the time resolution of the S-transform and vice versa (Kazemi, 2014).\n\
+\n\
+Two `win_type` are available: 'gauss' (default) and 'kazemi' (Kazemi, 2014).";
 
 static PyObject *st_wrap(PyObject *self, PyObject *args)
 {
@@ -31,13 +43,18 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 	npy_intp dim[2];
 	int lo = 0;
 	int hi = 0;
+	double gamma = 1;
+	char *win_type = "gauss";
+	char buff[10];
 	PyObject *o;
 	PyArrayObject *a, *r;
-
-	if (!PyArg_ParseTuple(args, "O|ii", &o, &lo, &hi)) {
+	enum WINDOW window_type = GAUSS;
+	if (!PyArg_ParseTuple(args, "O|iids", &o, &lo, &hi, &gamma, &win_type)) {
 		return NULL;
 	}
-
+	if(strcmp(win_type, "kazemi") == 0){
+		window_type = KAZEMI;
+	}
 	a = (PyArrayObject *)
 		PyArray_ContiguousFromObject(o, NPY_DOUBLE, 1, 1);
 	if (a == NULL) {
@@ -56,16 +73,15 @@ static PyObject *st_wrap(PyObject *self, PyObject *args)
 		Py_DECREF(a);
 		return NULL;
 	}
-
-	st(n, lo, hi, (double *)a->data, (double *)r->data);
+	st(n, lo, hi, gamma, window_type, (double *)a->data, (double *)r->data);
 
 	Py_DECREF(a);
 	return PyArray_Return(r);
 }
 
 static char Doc_ist[] =
-"ist(y[, lo, hi]) returns the inverse Stockwell transform of the 2d, complex\n\
-array y.";
+"ist(y, lo=0, hi=0)\n--\n\n\
+Returns the inverse Stockwell transform of the 2d, complex array y.\n";
 
 static PyObject *ist_wrap(PyObject *self, PyObject *args)
 {
@@ -111,7 +127,8 @@ static PyObject *ist_wrap(PyObject *self, PyObject *args)
 }
 
 static char Doc_hilbert[] =
-"hilbert(x) returns the complex Hilbert transform of the real array x.";
+"hilbert(x)\n--\n\n\
+Returns the complex Hilbert transform of the real array x.";
 
 static PyObject *hilbert_wrap(PyObject *self, PyObject *args)
 {

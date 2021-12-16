@@ -19,6 +19,7 @@
 #include <string.h>
 #include <math.h>
 #include <fftw3.h>
+#include "st_types.h"
 
 char *Wisfile = NULL;
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -54,7 +55,8 @@ int st_freq(double f, int len, double srate)
 	return (int)floor(f * len / srate + .5);
 }
 
-static double gauss(int n, int m);
+static double gauss(int n, int m, double gamma);
+static double kazemi(int n, int m, double gamma);
 
 /* Stockwell transform of the real array data. The len argument is the
 number of time points, and it need not be a power of two. The lo and hi
@@ -64,7 +66,7 @@ returned in the complex array result, which must be preallocated, with
 n rows and len columns, where n is hi - lo + 1. For the default values of
 lo and hi, n is len / 2 + 1. */
 
-void st(int len, int lo, int hi, double *data, double *result)
+void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *data, double *result)
 {
 	int i, k, n, l2;
 	double s, *p;
@@ -73,6 +75,12 @@ void st(int len, int lo, int hi, double *data, double *result)
 	static double *g;
 	static fftw_plan p1, p2;
 	static fftw_complex *h, *H, *G;
+	static double (*window_function)(int, int, double);
+	window_function = &gauss;
+	if (window_code == KAZEMI)
+	{
+		window_function = &kazemi;
+	}
 
 	/* Check for frequency defaults. */
 
@@ -175,10 +183,10 @@ void st(int len, int lo, int hi, double *data, double *result)
 		/* Scale the FFT of the gaussian. Negative frequencies
 		wrap around. */
 
-		g[0] = gauss(n, 0);
+		g[0] = (*window_function)(n, 0, gamma);
 		l2 = len / 2 + 1;
 		for (i = 1; i < l2; i++) {
-			g[i] = g[len - i] = gauss(n, i);
+			g[i] = g[len - i] = (*window_function)(n, i, gamma);
 		}
 
 		for (i = 0; i < len; i++) {
@@ -205,10 +213,17 @@ void st(int len, int lo, int hi, double *data, double *result)
 
 /* This is the Fourier Transform of a Gaussian. */
 
-static double gauss(int n, int m)
+static double gauss(int n, int m, double gamma)
 {
-	return exp(-2. * M_PI * M_PI * m * m / (n * n));
+	return exp(-2. * M_PI * M_PI * m * m * gamma * gamma / (n * n));
 }
+
+/* This is the Fourier Transform of a Kazemi window. */
+static double kazemi(int n, int m, double gamma)
+{
+	return 1/(1+((m * m * gamma  / n) * (m * m * gamma  / n)));
+}
+
 
 /* Inverse Stockwell transform. */
 

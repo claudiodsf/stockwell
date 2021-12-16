@@ -36,7 +36,8 @@ static void sine_taper(int k, int N, double *d)
 }
 
 static char Doc_sine_taper[] =
-"sine_taper(k, N) returns the kth sine taper of length N.";
+"sine_taper(k, N)\n--\n\n\
+Returns the kth sine taper of length N.";
 
 static PyObject *sine_taper_wrap(PyObject *self, PyObject *args)
 {
