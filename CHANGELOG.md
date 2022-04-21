@@ -6,10 +6,10 @@ Based on original code from [NIMH MEG Core Facility].
 
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
 
-(c) 2021 Claudio Satriano <satriano@ipgp.fr>
+(c) 2021-2022 Claudio Satriano <satriano@ipgp.fr>
 
 
-## unreleased
+## v1.0.5 - 2022-04-21
 - New parameters for `st.st()`: `gamma` and `win_type`:
   - `gamma` can be used to tune the time and frequency resolutions
      of the S-transform.

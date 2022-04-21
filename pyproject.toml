@@ -11,10 +11,6 @@ skip = '*-win32'
 test-requires = 'pytest'
 test-command = 'pytest --pyargs stockwell'
 
-[[tool.cibuildwheel.overrides]]
-select = 'cp37-win_amd64'
-test-requires = 'pytest==4'
-
 [tool.cibuildwheel.linux]
 before-all = 'yum install -y fftw-devel'
 
