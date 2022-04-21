@@ -6,7 +6,7 @@ requires = [
 ]
 
 [tool.cibuildwheel]
-build = ['cp36-*', 'cp37-*', 'cp38-*']
+build = ['cp36-*', 'cp37-*', 'cp38-*', 'cp39-*']
 skip = '*-win32'
 test-requires = 'pytest'
 test-command = 'pytest --pyargs stockwell'
