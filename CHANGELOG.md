@@ -9,6 +9,10 @@ Based on original code from [NIMH MEG Core Facility].
 (c) 2021-2022 Claudio Satriano <satriano@ipgp.fr>
 
 
+## v1.0.6 - 2022-04-21
+- Fix for missing file in source distribution
+
+
 ## v1.0.5 - 2022-04-21
 - New parameters for `st.st()`: `gamma` and `win_type`:
   - `gamma` can be used to tune the time and frequency resolutions
