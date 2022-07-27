@@ -8,6 +8,10 @@ Based on original code from [NIMH MEG Core Facility].
 
 (c) 2021-2022 Claudio Satriano <satriano@ipgp.fr>
 
+## v1.0.7 - 2022-07-27
+
+- Packages for Python 3.10 and macOS arm (M1, M2)
+
 ## v1.0.6 - 2022-04-21
 
 - Fix for missing file in source distribution
