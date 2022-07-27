@@ -16,3 +16,6 @@ RELEASE-VERSION
 # other unnecessary files
 .directory
 .DS_Store
+
+# IDE
+.vscode
