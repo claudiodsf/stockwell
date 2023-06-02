@@ -21,6 +21,9 @@
 #include <fftw3.h>
 #include "st_types.h"
 
+// the following is for Windows
+void PyInit_st() {}
+
 char *Wisfile = NULL;
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	const char *Wistemplate = "%s\.fftwis";
@@ -66,6 +69,9 @@ returned in the complex array result, which must be preallocated, with
 n rows and len columns, where n is hi - lo + 1. For the default values of
 lo and hi, n is len / 2 + 1. */
 
+#ifdef __cplusplus
+extern "C"
+#endif
 void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *data, double *result)
 {
 	int i, k, n, l2;
@@ -227,6 +233,9 @@ static double kazemi(int n, int m, double gamma)
 
 /* Inverse Stockwell transform. */
 
+#ifdef __cplusplus
+extern "C"
+#endif
 void ist(int len, int lo, int hi, double *data, double *result)
 {
 	int i, n, l2;
@@ -314,6 +323,9 @@ void ist(int len, int lo, int hi, double *data, double *result)
 
 /* This does just the Hilbert transform. */
 
+#ifdef __cplusplus
+extern "C"
+#endif
 void hilbert(int len, double *data, double *result)
 {
 	int i, l2;

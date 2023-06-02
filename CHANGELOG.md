@@ -6,7 +6,11 @@ Based on original code from [NIMH MEG Core Facility].
 
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
 
-(c) 2021-2022 Claudio Satriano <satriano@ipgp.fr>
+(c) 2021-2023 Claudio Satriano <satriano@ipgp.fr>
+
+## Unreleased
+
+- Use ctypes to wrap the modules written in C
 
 ## v1.0.7 - 2022-07-27
 
