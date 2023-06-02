@@ -11,6 +11,7 @@ Based on original code from [NIMH MEG Core Facility].
 ## Unreleased
 
 - Use ctypes to wrap the modules written in C
+- License changed to GPLv3
 
 ## v1.0.7 - 2022-07-27
 

@@ -8,7 +8,6 @@ Based on original code from [NIMH MEG Core Facility].
 [![PyPI-badge]][PyPI-link]
 [![license-badge]][license-link]
 
-
 ## Installation
 
 ### Using Anaconda
@@ -20,7 +19,6 @@ To install, simply run:
 
     conda install -c conda-forge stockwell
 
-
 ### Using pip and PyPI
 
 The latest release of Stockwell is available on the
@@ -29,7 +27,6 @@ The latest release of Stockwell is available on the
 You can install it easily through `pip`:
 
     pip install stockwell
-
 
 ### Installation from source
 
@@ -81,7 +78,6 @@ Or, alternatively, in "editable" mode:
 
     pip install -e .
 
-
 ## Usage
 
 Example usage:
@@ -131,7 +127,6 @@ plt.show()
 ```
 ![inv_stockwell.png](inv_stockwell.png)
 
-
 ## References
 
 Stockwell, R.G., Mansinha, L. & Lowe, R.P., 1996. Localization of the complex
@@ -140,16 +135,14 @@ doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
 
 [S transform on Wikipedia].
 
-
-
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell
 
 [cf-badge]: http://img.shields.io/conda/vn/conda-forge/stockwell.svg
 [cf-link]: https://anaconda.org/conda-forge/stockwell
 [PyPI-badge]: http://img.shields.io/pypi/v/stockwell.svg
 [PyPI-link]: https://pypi.python.org/pypi/stockwell
-[license-badge]: https://img.shields.io/badge/license-CeCILL--2.1-green
-[license-link]: http://www.cecill.info/licences.en.html
+[license-badge]: https://img.shields.io/badge/license-GPLv3-green
+[license-link]: https://www.gnu.org/licenses/gpl-3.0.html
 [releases-link]: https://github.com/claudiodsf/stockwell/releases
 
 [Anaconda]: https://www.anaconda.com/products/individual
