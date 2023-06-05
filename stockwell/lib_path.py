@@ -14,17 +14,10 @@ This file is part of the Stockwell project.
     (https://www.gnu.org/licenses/gpl-3.0.html)
 """
 import os
-import sysconfig
+import importlib.machinery
 
 
 def get_lib_path(lib):
-    suffix = (
-        sysconfig.get_config_var('EXT_SUFFIX') or
-        sysconfig.get_config_var('SO')
-    )
-    if os.name == 'nt':
-        py_version_nodot = sysconfig.get_config_var('py_version_nodot')
-        platform = sysconfig.get_platform().replace('-', '_')
-        suffix = f'.cp{py_version_nodot}-{platform}{suffix}'
+    suffix = importlib.machinery.EXTENSION_SUFFIXES[0]
     libname = lib + suffix
     return os.path.join(os.path.dirname(__file__), 'lib', libname)
