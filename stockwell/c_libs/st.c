@@ -72,6 +72,9 @@ lo and hi, n is len / 2 + 1. */
 #ifdef __cplusplus
 extern "C"
 #endif
+#ifdef _MSC_VER
+__declspec(dllexport)
+#endif
 void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *data, double *result)
 {
 	int i, k, n, l2;
@@ -236,6 +239,9 @@ static double kazemi(int n, int m, double gamma)
 #ifdef __cplusplus
 extern "C"
 #endif
+#ifdef _MSC_VER
+__declspec(dllexport)
+#endif
 void ist(int len, int lo, int hi, double *data, double *result)
 {
 	int i, n, l2;
@@ -325,6 +331,9 @@ void ist(int len, int lo, int hi, double *data, double *result)
 
 #ifdef __cplusplus
 extern "C"
+#endif
+#ifdef _MSC_VER
+__declspec(dllexport)
 #endif
 void hilbert(int len, double *data, double *result)
 {

@@ -27,6 +27,9 @@ void PyInit_sine() {}
 #ifdef __cplusplus
 extern "C"
 #endif
+#ifdef _MSC_VER
+__declspec(dllexport)
+#endif
 void sine_taper(int k, int N, double *d)
 {
     int i;
