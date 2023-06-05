@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 import os
-from unittest import TestCase
+import unittest
 from stockwell.lib_path import get_lib_path
 import numpy as np
 from numpy.testing import assert_allclose
@@ -9,7 +9,7 @@ from numpy.testing import assert_allclose
 # early failure if the libraries are not found.
 
 
-class TestStockwell(TestCase):
+class TestStockwell(unittest.TestCase):
     def test_find_libs(self):
         for lib in 'st', 'sine':
             lib_path = get_lib_path(lib)
@@ -55,3 +55,7 @@ class TestStockwell(TestCase):
             0.42206128, 0.38786839, 0.3222527, 0.23053002, 0.12013117])
         taper = sine.sine_taper(0, 10)
         assert_allclose(taper, taper_expected)
+
+
+if __name__ == '__main__':
+    unittest.main()
