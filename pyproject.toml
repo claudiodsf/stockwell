@@ -25,5 +25,8 @@ before-all = 'brew install fftw'
 before-all = '%CONDA%\Scripts\conda.exe install fftw'
 before-build = 'pip install delvewheel'
 repair-wheel-command = 'delvewheel repair --add-path %CONDA%\Library\bin -w {dest_dir} {wheel}'
-# test-requires = 'nose'
-# test-command = 'nosetests stockwell'
+
+[[tool.cibuildwheel.overrides]]
+select = "cp38-*-win64"
+test-requires = 'nose'
+test-command = 'nosetests stockwell.tests'
