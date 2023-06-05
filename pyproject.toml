@@ -27,6 +27,6 @@ before-build = 'pip install delvewheel'
 repair-wheel-command = 'delvewheel repair --add-path %CONDA%\Library\bin -w {dest_dir} {wheel}'
 
 [[tool.cibuildwheel.overrides]]
-select = "cp38-*-win64"
+select = ['cp37-*-win64', 'cp38-*-win64']
 test-requires = 'nose'
 test-command = 'nosetests stockwell.tests'
