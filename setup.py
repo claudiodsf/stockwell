@@ -20,11 +20,12 @@ project_urls = {
 
 include_dirs_st = []
 library_dirs_st = []
-# First search for fftw3 in the current directory
+# First search for fftw3 in the "external" directory
 # (i.e., installed using the script "get_fftw3.sh")
-if os.path.exists('fftw3'):
-    include_dirs_st.append('fftw3/include')
-    library_dirs_st.append('fftw3/lib')
+fftw3_dir = os.path.join('external', 'fftw3')
+if os.path.exists(fftw3_dir):
+    include_dirs_st.append(os.path.join(fftw3_dir, 'include'))
+    library_dirs_st.append(os.path.join(fftw3_dir, 'lib'))
 else:
     # Search Homebrew fftw3 on macOS
     if 'HOMEBREW_PREFIX' in os.environ:

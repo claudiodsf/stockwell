@@ -58,7 +58,9 @@ To compile Stockwell, you will need to have [FFTW]
 installed.
 
 On Linux and macOS, you can download and compile FFTW from source using
-the script `get_fftw3.sh`
+the script `get_fftw3.sh` provided in the `scripts` directory:
+
+    ./scripts/get_fftw3.sh
 
 Alternatively, you can install FFTW using your package manager:
 

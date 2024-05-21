@@ -3,6 +3,7 @@ stockwell.egg-info/
 dist/
 build/
 wheels/
+external/
 RELEASE-VERSION
 *.so
 *.pyd
@@ -19,8 +20,3 @@ RELEASE-VERSION
 
 # IDE
 .vscode
-
-# FFTW3 files
-fftw3/
-fftw-3.*/
-fftw-3.*.tar.gz
