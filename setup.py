@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """setup.py: setuptools control."""
 import os
-from setuptools import setup, Extension
+from setuptools import setup, find_packages, Extension
 import versioneer
 
 with open('README.md', 'rb') as f:
@@ -62,8 +62,7 @@ ext_modules = [
 
 setup(
     name='stockwell',
-    packages=['stockwell', 'stockwell.tests'],
-    include_package_data=True,
+    packages=find_packages(),
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     ext_package='stockwell.lib',
