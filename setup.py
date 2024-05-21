@@ -20,6 +20,12 @@ project_urls = {
 
 include_dirs_st = []
 library_dirs_st = []
+# Search Homebrew fftw3 on macOS
+if 'HOMEBREW_PREFIX' in os.environ:
+    include_dirs_st.append(
+        os.path.join(os.environ['HOMEBREW_PREFIX'], 'include'))
+    library_dirs_st.append(
+        os.path.join(os.environ['HOMEBREW_PREFIX'], 'lib'))
 # This seems necessary only for Windows
 if 'CONDA_PREFIX' in os.environ:
     include_dirs_st.append(
