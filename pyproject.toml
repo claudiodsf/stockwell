@@ -20,7 +20,6 @@ before-all = "apk add fftw-dev"
 
 [tool.cibuildwheel.macos]
 before-build = './get_fftw3.sh'
-repair-wheel-command = ''
 
 [tool.cibuildwheel.windows]
 before-all = '%CONDA%\Scripts\conda.exe install fftw'
