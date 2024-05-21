@@ -1,4 +1,4 @@
-name: Build
+name: Build wheels and sdist, publish to PyPI
 
 on: [push, pull_request]
 
@@ -52,21 +52,22 @@ jobs:
         with:
           path: dist/*.tar.gz
 
-  upload_pypi:
-    needs: [build_wheels, build_sdist]
-    runs-on: ubuntu-latest
+  publish-to-pypi:
+    name: Publish to PyPI
     # upload to PyPI on every tag starting with 'v'
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-    # alternatively, to publish when a GitHub Release is created, use the following rule:
-    # if: github.event_name == 'release' && github.event.action == 'published'
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/stockwell
+    permissions:
+      id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download all the dists
+        uses: actions/download-artifact@v4
         with:
           name: artifact
           path: dist
-
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: claudiodsf
-          password: ${{ secrets.pypi_password }}
-          # To test: repository_url: https://test.pypi.org/legacy/
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
