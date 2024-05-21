@@ -5,14 +5,14 @@ st.py
 This file is part of the Stockwell project.
 
 :copyright:
-    2023 Claudio Satriano <satriano@ipgp.fr>
+    2023-2024 Claudio Satriano <satriano@ipgp.fr>
 
 :license:
     GNU General Public License v3.0 or later.
     (https://www.gnu.org/licenses/gpl-3.0.html)
 """
-import numpy as np
 from ctypes import CDLL, POINTER, c_int, c_uint, c_double, c_void_p
+import numpy as np
 from .lib_path import get_lib_path
 
 lib_st = CDLL(get_lib_path('st'))

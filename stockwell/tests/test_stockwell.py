@@ -1,16 +1,31 @@
-# -*- coding: utf8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+"""
+test_stockwell.py
+
+This file is part of the Stockwell project.
+
+:copyright:
+    2023-2024 Claudio Satriano <satriano@ipgp.fr>
+
+:license:
+    GNU General Public License v3.0 or later.
+    (https://www.gnu.org/licenses/gpl-3.0.html)
+"""
 import os
 import unittest
-from stockwell.lib_path import get_lib_path
 import numpy as np
 from numpy.testing import assert_allclose
+from stockwell.lib_path import get_lib_path
 
 # Note: st and sine modules are lazily imported in the tests below to avoid
 # early failure if the libraries are not found.
+# pylint: disable=import-outside-toplevel
 
 
 class TestStockwell(unittest.TestCase):
+    """Test the Stockwell transform."""
     def test_find_libs(self):
+        """Test if the compiled libraries are found."""
         for lib in 'st', 'sine':
             lib_path = get_lib_path(lib)
             # check if the library exists
@@ -19,6 +34,7 @@ class TestStockwell(unittest.TestCase):
                 assert False
 
     def test_st(self):
+        """Test the Stockwell transform."""
         from stockwell import st
         array = np.array([0, 1])
         stock_expected = np.array([
@@ -29,6 +45,7 @@ class TestStockwell(unittest.TestCase):
         assert_allclose(stock, stock_expected)
 
     def test_ist(self):
+        """Test the inverse Stockwell transform."""
         from stockwell import st
         stock = np.array([
             [0.5+0.j,  0.5+0.j],
@@ -39,6 +56,7 @@ class TestStockwell(unittest.TestCase):
         assert_allclose(array, array_expected)
 
     def test_hilbert(self):
+        """Test the Hilbert transform."""
         from stockwell import st
         array = np.arange(10)
         hilbert_expected = np.array([
@@ -49,6 +67,7 @@ class TestStockwell(unittest.TestCase):
         assert_allclose(hilbert, hilbert_expected)
 
     def test_sine_taper(self):
+        """Test the sine taper."""
         from stockwell import sine
         taper_expected = np.array([
             0.12013117, 0.23053002, 0.3222527, 0.38786839, 0.42206128,
