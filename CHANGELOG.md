@@ -8,6 +8,12 @@ Based on original code from [NIMH MEG Core Facility].
 
 (c) 2021-2023 Claudio Satriano <satriano@ipgp.fr>
 
+## unreleased
+
+- Remove support for Python 3.6 and 3.7
+- Add support for Python 3.11 and 3.12
+- Support for Numpy 2.0!
+
 ## v1.1 - 2023-06-05
 
 - Use ctypes to wrap the modules written in C
