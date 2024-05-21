@@ -14,18 +14,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - name: Fetch tags
         run: |
           git fetch --prune --unshallow --tags -f
           echo exit code $?
           git tag --list
-
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.5
-
+        uses: pypa/cibuildwheel@v2.18
       - uses: actions/upload-artifact@v4
         with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -33,23 +31,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Fetch tags
         run: |
           git fetch --prune --unshallow --tags -f
           echo exit code $?
           git tag --list
-
       - uses: actions/setup-python@v5
         name: Install Python
         with:
           python-version: '3.8'
-
       - name: Build sdist
         run: pip install numpy && python setup.py sdist
-
       - uses: actions/upload-artifact@v4
         with:
+          name: cibw-sdist
           path: dist/*.tar.gz
 
   publish-to-pypi:
@@ -64,10 +59,11 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - name: Download all the dists
+      - name: Download all the artifacts
         uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: cibw-*
           path: dist
+          merge-multiple: true
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
