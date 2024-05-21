@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """setup.py: setuptools control."""
 import os
-from setuptools import setup
-from distutils.core import Extension
+from setuptools import setup, Extension
 import versioneer
 
 with open('README.md', 'rb') as f:
@@ -13,6 +12,11 @@ with open('README.md', 'rb') as f:
         '(inv_stockwell.png)',
         '(https://cdn.jsdelivr.net/gh/claudiodsf/stockwell/inv_stockwell.png)'
     )
+
+project_urls = {
+    'Homepage': 'https://github.com/claudiodsf/stockwell',
+    'Source': 'https://github.com/claudiodsf/stockwell',
+}
 
 include_dirs_st = []
 library_dirs_st = []
@@ -56,15 +60,16 @@ setup(
     long_description_content_type='text/markdown',
     author='Claudio Satriano',
     author_email='satriano@ipgp.fr',
-    url='https://github.com/claudiodsf/stockwell',
-    license='CeCILL Free Software License Agreement, Version 2.1',
+    url=project_urls['Homepage'],
+    project_urls=project_urls,
+    license='GNU General Public License v3 or later (GPLv3+)',
     platforms='OS Independent',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: CEA CNRS Inria Logiciel Libre '
-            'License, version 2.1 (CeCILL-2.1)',
+        'License :: OSI Approved :: '
+            'GNU General Public License v3 or later (GPLv3+)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
@@ -73,6 +78,8 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Physics'],
     install_requires=['numpy>=1.18']
