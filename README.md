@@ -4,6 +4,7 @@ Python package for time-frequency analysis through Stockwell transform.
 
 Based on original code from [NIMH MEG Core Facility].
 
+[![changelog-badge]][changelog-link]
 [![cf-badge]][cf-link]
 [![PyPI-badge]][PyPI-link]
 [![license-badge]][license-link]
@@ -137,6 +138,8 @@ doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
 
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell
 
+[changelog-badge]: https://img.shields.io/badge/Changelog-136CB6.svg
+[changelog-link]: https://github.com/claudiodsf/stockwell/blob/main/CHANGELOG.md
 [cf-badge]: http://img.shields.io/conda/vn/conda-forge/stockwell.svg
 [cf-link]: https://anaconda.org/conda-forge/stockwell
 [PyPI-badge]: http://img.shields.io/pypi/v/stockwell.svg
