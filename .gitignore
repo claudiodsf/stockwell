@@ -19,3 +19,8 @@ RELEASE-VERSION
 
 # IDE
 .vscode
+
+# FFTW3 files
+fftw3/
+fftw-3.*/
+fftw-3.*.tar.gz

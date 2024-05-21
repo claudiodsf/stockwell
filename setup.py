@@ -20,24 +20,30 @@ project_urls = {
 
 include_dirs_st = []
 library_dirs_st = []
-# Search Homebrew fftw3 on macOS
-if 'HOMEBREW_PREFIX' in os.environ:
-    include_dirs_st.append(
-        os.path.join(os.environ['HOMEBREW_PREFIX'], 'include'))
-    library_dirs_st.append(
-        os.path.join(os.environ['HOMEBREW_PREFIX'], 'lib'))
-# This seems necessary only for Windows
-if 'CONDA_PREFIX' in os.environ:
-    include_dirs_st.append(
-        os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'include'))
-    library_dirs_st.append(
-        os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'lib'))
-# This is needed for Miniconda on GitHub-hosted Windows runner
-if 'CONDA' in os.environ:
-    include_dirs_st.append(
-        os.path.join(os.environ['CONDA'], 'Library', 'include'))
-    library_dirs_st.append(
-        os.path.join(os.environ['CONDA'], 'Library', 'lib'))
+# First search for fftw3 in the current directory
+# (i.e., installed using the script "get_fftw3.sh")
+if os.path.exists('fftw3'):
+    include_dirs_st.append('fftw3/include')
+    library_dirs_st.append('fftw3/lib')
+else:
+    # Search Homebrew fftw3 on macOS
+    if 'HOMEBREW_PREFIX' in os.environ:
+        include_dirs_st.append(
+            os.path.join(os.environ['HOMEBREW_PREFIX'], 'include'))
+        library_dirs_st.append(
+            os.path.join(os.environ['HOMEBREW_PREFIX'], 'lib'))
+    # Search for a version of fftw3 provided by Conda
+    if 'CONDA_PREFIX' in os.environ:
+        include_dirs_st.append(
+            os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'include'))
+        library_dirs_st.append(
+            os.path.join(os.environ['CONDA_PREFIX'], 'Library', 'lib'))
+    # This is needed for Miniconda on GitHub-hosted Windows runner
+    if 'CONDA' in os.environ:
+        include_dirs_st.append(
+            os.path.join(os.environ['CONDA'], 'Library', 'include'))
+        library_dirs_st.append(
+            os.path.join(os.environ['CONDA'], 'Library', 'lib'))
 
 ext_modules = [
     Extension(

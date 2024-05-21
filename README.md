@@ -57,17 +57,22 @@ On Windows, install the [Microsoft C++ Build Tools].
 To compile Stockwell, you will need to have [FFTW]
 installed.
 
-If you use [Anaconda]&nbsp;(Linux, macOS, Windows):
+On Linux and macOS, you can download and compile FFTW from source using
+the script `get_fftw3.sh`
 
-    conda install fftw
+Alternatively, you can install FFTW using your package manager:
 
-If you use Homebrew (macOS)
+- If you use [Anaconda]&nbsp;(Linux, macOS, Windows):
 
-    brew install fftw
+      conda install fftw
 
-If you use `apt` (Debian or Ubuntu)
+- If you use Homebrew (macOS)
 
-    sudo apt install libfftw3-dev
+      brew install fftw
+
+- If you use `apt` (Debian or Ubuntu)
+
+      sudo apt install libfftw3-dev
 
 #### Install the Python package from source
 

@@ -6,13 +6,14 @@ Based on original code from [NIMH MEG Core Facility].
 
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
 
-(c) 2021-2023 Claudio Satriano <satriano@ipgp.fr>
+(c) 2021-2024 Claudio Satriano <satriano@ipgp.fr>
 
 ## unreleased
 
 - Remove support for Python 3.6 and 3.7
 - Add support for Python 3.11 and 3.12
 - Support for Numpy 2.0!
+- Added a script to download and compile FFTW3
 
 ## v1.1 - 2023-06-05
 
