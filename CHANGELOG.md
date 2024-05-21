@@ -8,7 +8,7 @@ Based on original code from [NIMH MEG Core Facility].
 
 (c) 2021-2024 Claudio Satriano <satriano@ipgp.fr>
 
-## unreleased
+## v1.1.1 - 2024-05-21
 
 - Remove support for Python 3.6 and 3.7
 - Add support for Python 3.11 and 3.12
