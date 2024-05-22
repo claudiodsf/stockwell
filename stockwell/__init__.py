@@ -8,6 +8,7 @@ Time-frequency analysis through Stockwell transform.
     GNU General Public License v3.0 or later.
     (https://www.gnu.org/licenses/gpl-3.0.html)
 """
+from . import st, sine  # noqa
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
