@@ -10,8 +10,8 @@ Based on original code from [NIMH MEG Core Facility].
 
 ## v1.1.2 - 2024-05-22
 
-- Make it possible again to directly call functions from submodels, like it was
-  in versions prior to v1.1. Example:
+- Make it possible again to directly call functions from submodules, like it
+  was in versions prior to v1.1. Example:
 
   ```python
   import stockwell
