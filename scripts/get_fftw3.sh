@@ -33,6 +33,6 @@ mkdir -p fftw3
 
 # Build the FFTW3 library
 cd fftw-$FFWT_VERSION
-./configure --prefix="$ext_dir/fftw3" --enable-threads
+./configure --prefix="$ext_dir/fftw3" --enable-threads --enable-shared
 make -s
 make -s install

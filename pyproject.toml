@@ -12,7 +12,8 @@ test-requires = 'pytest'
 test-command = 'pytest --pyargs stockwell'
 
 [tool.cibuildwheel.linux]
-before-all = 'yum install -y fftw-devel'
+before-build = './scripts/get_fftw3.sh'
+repair-wheel-command = 'LD_LIBRARY_PATH=/project/external/fftw3/lib auditwheel repair -w {dest_dir} {wheel}'
 
 [[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"
