@@ -8,6 +8,11 @@ Based on original code from [NIMH MEG Core Facility].
 
 (c) 2021-2025 Claudio Satriano <satriano@ipgp.fr>
 
+## v1.2 - 2025-01-08
+
+- Add support for Python 3.13
+- Remove support for Python 3.8
+
 ## v1.1.2 - 2024-05-22
 
 - Make it possible again to directly call functions from submodules, like it
