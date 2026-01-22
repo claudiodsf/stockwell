@@ -2,8 +2,53 @@
 requires = [
   'wheel',
   'setuptools',
-  'numpy>=1.18'
+  'numpy>=1.18',
+  'versioneer[toml]'
 ]
+
+[project]
+name = 'stockwell'
+dynamic = ['version', 'readme']
+authors = [
+    { name = 'Claudio Satriano', email = 'satriano@ipgp.fr' },
+]
+description = 'Time-frequency analysis through Stockwell transform'
+license = 'GPL-3.0-or-later'
+license-files = ['LICENSE.txt']
+classifiers = [
+  'Development Status :: 5 - Production/Stable',
+  'Environment :: Console',
+  'Intended Audience :: Science/Research',
+  'Operating System :: OS Independent',
+  'Programming Language :: Python',
+  'Programming Language :: Python :: 3',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
+  'Topic :: Scientific/Engineering',
+  'Topic :: Scientific/Engineering :: Physics',
+]
+requires-python = '>3.9'
+dependencies = [
+  'numpy>=1.18',
+]
+
+[project.urls]
+Homepage = 'https://github.com/claudiodsf/stockwell'
+Source = 'https://github.com/claudiodsf/stockwell'
+
+[tool.versioneer]
+VCS = 'git'
+style = 'pep440'
+versionfile_source = 'stockwell/_version.py'
+versionfile_build = 'stockwell/_version.py'
+tag_prefix = 'v'
+parentdir_prefix = 'stockwell-'
+
+[tool.setuptools.dynamic]
+version = {attr = 'stockwell.__version__'}
 
 [tool.cibuildwheel]
 build = ['cp39-*', 'cp310-*', 'cp311-*', 'cp312-*', 'cp313-*']

@@ -61,36 +61,10 @@ ext_modules = [
 ]
 
 setup(
-    name='stockwell',
-    packages=find_packages(),
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
-    ext_package='stockwell.lib',
-    ext_modules=ext_modules,
-    description='Time-frequency analysis through Stockwell transform',
     long_description=long_descr,
     long_description_content_type='text/markdown',
-    author='Claudio Satriano',
-    author_email='satriano@ipgp.fr',
-    url=project_urls['Homepage'],
-    project_urls=project_urls,
-    license='GNU General Public License v3 or later (GPLv3+)',
-    platforms='OS Independent',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Console',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: '
-            'GNU General Public License v3 or later (GPLv3+)',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.12',
-        'Programming Language :: Python :: 3.13',
-        'Topic :: Scientific/Engineering',
-        'Topic :: Scientific/Engineering :: Physics'],
-    install_requires=['numpy>=1.18']
-    )
+    cmdclass=versioneer.get_cmdclass(),
+    packages=find_packages(),
+    ext_package='stockwell.lib',
+    ext_modules=ext_modules,
+)
