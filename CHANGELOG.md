@@ -6,7 +6,7 @@ Based on original code from [NIMH MEG Core Facility].
 
 [NIMH MEG Core Facility]: https://kurage.nimh.nih.gov/meglab/Meg/Stockwell.
 
-(c) 2021-2025 Claudio Satriano <satriano@ipgp.fr>
+(c) 2021-2026 Claudio Satriano <satriano@ipgp.fr>
 
 ## v1.2 - 2025-01-08
 

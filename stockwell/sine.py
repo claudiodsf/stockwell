@@ -5,7 +5,7 @@ sine.py
 This file is part of the Stockwell project.
 
 :copyright:
-    2023-2025 Claudio Satriano <satriano@ipgp.fr>
+    2023-2026 Claudio Satriano <satriano@ipgp.fr>
 
 :license:
     GNU General Public License v3.0 or later.

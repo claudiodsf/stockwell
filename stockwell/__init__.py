@@ -2,7 +2,7 @@
 Time-frequency analysis through Stockwell transform.
 
 :copyright:
-    2021-2025 Claudio Satriano <satriano@ipgp.fr>
+    2021-2026 Claudio Satriano <satriano@ipgp.fr>
 
 :license:
     GNU General Public License v3.0 or later.
