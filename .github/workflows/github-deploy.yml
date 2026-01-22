@@ -41,7 +41,7 @@ jobs:
         with:
           python-version: '3.9'
       - name: Build sdist
-        run: pip install numpy && python setup.py sdist
+        run: pip install numpy versioneer[toml] && python setup.py sdist
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-sdist
