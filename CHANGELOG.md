@@ -8,6 +8,11 @@ Based on original code from [NIMH MEG Core Facility].
 
 (c) 2021-2026 Claudio Satriano <satriano@ipgp.fr>
 
+## Unreleased
+
+- Add support for Python 3.14
+- Minimum required Python version: 3.9
+
 ## v1.2 - 2025-01-08
 
 - Add support for Python 3.13
