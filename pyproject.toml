@@ -1,7 +1,7 @@
 [build-system]
 requires = [
   'wheel',
-  'setuptools',
+  'setuptools>=77',
   'numpy>=1.18',
   'versioneer[toml]'
 ]
