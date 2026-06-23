@@ -9,7 +9,7 @@ jobs:
   release_version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Generate GitHub Release
         uses: lsegal/github-release-from-changelog-action@latest
         env:
