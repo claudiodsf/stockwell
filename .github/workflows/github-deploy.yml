@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Fetch tags
         run: |
           git fetch --prune --unshallow --tags -f
@@ -30,7 +30,7 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Fetch tags
         run: |
           git fetch --prune --unshallow --tags -f
