@@ -8,6 +8,7 @@ Based on original code from [NIMH MEG Core Facility].
 [![cf-badge]][cf-link]
 [![PyPI-badge]][PyPI-link]
 [![license-badge]][license-link]
+[![docs-badge]][docs-link]
 
 ## Installation
 
@@ -153,6 +154,8 @@ doi:[10.1109/78.492555](https://doi.org/10.1109/78.492555)
 [PyPI-link]: https://pypi.python.org/pypi/stockwell
 [license-badge]: https://img.shields.io/badge/license-GPLv3-green
 [license-link]: https://www.gnu.org/licenses/gpl-3.0.html
+[docs-badge]: https://readthedocs.org/projects/stockwell/badge/?version=latest
+[docs-link]: https://stockwell.readthedocs.io/en/latest/?badge=latest
 [releases-link]: https://github.com/claudiodsf/stockwell/releases
 
 [Anaconda]: https://www.anaconda.com/products/individual
