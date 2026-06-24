@@ -50,6 +50,9 @@ static int hilbert_planlen = 0;
 static fftw_plan hilbert_p1 = NULL, hilbert_p2 = NULL;
 static fftw_complex *hilbert_h = NULL, *hilbert_H = NULL;
 
+#ifdef _MSC_VER
+__declspec(dllexport)
+#endif
 void st_cleanup(void)
 {
 	if (st_planlen > 0) {
