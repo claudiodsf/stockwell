@@ -5,3 +5,5 @@ include stockwell/lib/__init__.py
 include versioneer.py
 include stockwell/_version.py
 include stockwell/c_libs/st_types.h
+include tests/__init__.py
+include tests/test_stockwell.py

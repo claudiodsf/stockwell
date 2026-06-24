@@ -28,12 +28,14 @@ ignore: # A list of paths or files which Sourcery will ignore.
 rule_settings:
   enable:
   - default
-  disable: []  # A list of rule IDs Sourcery will never suggest.
+  disable:
+  - no-loop-in-tests
+  - no-conditionals-in-tests
   rule_types:
   - refactoring
   - suggestion
   - comment
-  python_version: '3.7' # A string specifying the lowest Python version your project supports. Sourcery will not suggest refactorings requiring a higher Python version.
+  python_version: '3.9' # A string specifying the lowest Python version your project supports. Sourcery will not suggest refactorings requiring a higher Python version.
 
 # rules:  # A list of custom rules Sourcery will include in its analysis.
 # - id: no-print-statements

@@ -55,7 +55,7 @@ version = {attr = 'stockwell.__version__'}
 build = ['cp39-*', 'cp310-*', 'cp311-*', 'cp312-*', 'cp313-*', 'cp314-*']
 skip = '*-win32'
 test-requires = 'pytest'
-test-command = 'pytest --pyargs stockwell'
+test-command = 'pytest {project}/tests'
 
 [tool.cibuildwheel.linux]
 before-build = './scripts/get_fftw3.sh'
@@ -73,4 +73,4 @@ before-all = '%CONDA%\Scripts\conda.exe install fftw'
 before-build = 'pip install delvewheel'
 repair-wheel-command = 'delvewheel repair --add-path %CONDA%\Library\bin -w {dest_dir} {wheel}'
 test-requires = 'pytest'
-test-command = '{package}\scripts\test_stockwell.bat'
+test-command = 'pytest {project}/tests'
