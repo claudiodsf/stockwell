@@ -27,6 +27,7 @@ class TestFindLibs(unittest.TestCase):
 
     def test_find_libs(self):
         """Test if the compiled libraries are found."""
+        # sourcery skip: no-loop-in-tests
         for lib in 'st', 'sine':
             with self.subTest(lib=lib):
                 lib_path = get_lib_path(lib)
@@ -211,6 +212,7 @@ class TestSineTaper(unittest.TestCase):
         """Test that sine tapers are orthogonal."""
         n = 10
         tapers = [self.sine.sine_taper(k, n) for k in range(5)]
+        # sourcery skip: no-loop-in-tests
         for i in range(5):
             for j in range(5):
                 with self.subTest(i=i, j=j):
