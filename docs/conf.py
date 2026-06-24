@@ -3,10 +3,16 @@
 import os
 import sys
 from datetime import datetime
+from unittest.mock import MagicMock
 
 # -- Path setup ----------------------------------------------------------
 
 sys.path.insert(0, os.path.abspath('..'))
+
+# -- Mock compiled C extensions for builds without FFTW3 -----------------
+
+import ctypes  # noqa: E402
+ctypes.CDLL = MagicMock()
 
 # -- Project information -------------------------------------------------
 
