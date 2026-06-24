@@ -1,0 +1,18 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    build,
+    dist,
+    *.egg-info,
+    configobj,
+    _version.py,
+
+max-line-length = 79
+inline-quotes = single
+multiline-quotes = single
+docstring-quotes = double
+avoid-escape = True
+ignore = E203, W503

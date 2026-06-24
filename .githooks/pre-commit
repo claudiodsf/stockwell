@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Copyright (c) 2021-2026 Claudio Satriano <satriano@ipgp.fr>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+    echo "Error: Not inside a git repository" >&2
+    exit 1
+}
+
+cd "$repo_root"
+
+# Collect staged Python files
+staged_py_files=()
+while IFS= read -r -d '' file; do
+    staged_py_files+=("$file")
+done < <(git diff --cached --name-only --diff-filter=ACM -z -- '*.py')
+
+if [[ ${#staged_py_files[@]} -eq 0 ]]; then
+    echo 'No staged Python files to check.'
+    exit 0
+fi
+
+echo "Running style checks on staged Python files..."
+scripts/check_style.sh "${staged_py_files[@]}"

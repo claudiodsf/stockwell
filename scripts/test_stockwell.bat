@@ -4,7 +4,7 @@ REM Allows for a temporary test failure by repeating the test 5 times
 REM (c) 2024-2026 Claudio Satriano <satriano@ipgp.fr>
 set /a n=0
 :loop
-pytest --pyargs stockwell && exit /b 0
+pytest tests && exit /b 0
 set /a n+=1
 if %n% gtr 5 goto :end
 goto :loop
