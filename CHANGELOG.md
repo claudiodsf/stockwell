@@ -12,6 +12,10 @@ Based on original code from [NIMH MEG Core Facility].
 
 - Add support for Python 3.14
 - Minimum required Python version: 3.9
+- Move tests outside the package directory
+- Validate inputs: reject empty arrays and non-integer parameters
+- Fix FFTW static plan caching to prevent segfault at exit
+- New tests: input validation, kazemi window, roundtrip, chirp example
 
 ## v1.2 - 2025-01-08
 
