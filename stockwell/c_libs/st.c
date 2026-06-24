@@ -31,7 +31,51 @@ char *Wisfile = NULL;
 	const char *Wistemplate = "%s/.fftwis";
 #endif
 #define WISLEN 8
+/* Static FFTW plans — kept between calls for performance, but
+   must be destroyed before process exit to avoid segfault. */
 
+/* st() plans */
+static int st_planlen = 0;
+static double *st_g = NULL;
+static fftw_plan st_p1 = NULL, st_p2 = NULL;
+static fftw_complex *st_h = NULL, *st_H = NULL, *st_G = NULL;
+
+/* ist() plans */
+static int ist_planlen = 0;
+static fftw_plan ist_p2 = NULL;
+static fftw_complex *ist_h = NULL, *ist_H = NULL;
+
+/* hilbert() plans */
+static int hilbert_planlen = 0;
+static fftw_plan hilbert_p1 = NULL, hilbert_p2 = NULL;
+static fftw_complex *hilbert_h = NULL, *hilbert_H = NULL;
+
+void st_cleanup(void)
+{
+	if (st_planlen > 0) {
+		fftw_destroy_plan(st_p1);
+		fftw_destroy_plan(st_p2);
+		fftw_free(st_h);
+		fftw_free(st_H);
+		fftw_free(st_G);
+		free(st_g);
+		st_planlen = 0;
+	}
+	if (ist_planlen > 0) {
+		fftw_destroy_plan(ist_p2);
+		fftw_free(ist_h);
+		fftw_free(ist_H);
+		ist_planlen = 0;
+	}
+	if (hilbert_planlen > 0) {
+		fftw_destroy_plan(hilbert_p1);
+		fftw_destroy_plan(hilbert_p2);
+		fftw_free(hilbert_h);
+		fftw_free(hilbert_H);
+		hilbert_planlen = 0;
+	}
+	fftw_cleanup();
+}
 void set_wisfile(void)
 {
 	const char *home;
@@ -79,11 +123,6 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 {
 	int i, k, n, l2;
 	double s, *p;
-	FILE *wisdom;
-	static int planlen = 0;
-	static double *g;
-	static fftw_plan p1, p2;
-	static fftw_complex *h, *H, *G;
 	static double (*window_function)(int, int, double);
 	window_function = &gauss;
 	if (window_code == KAZEMI)
@@ -100,59 +139,48 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 	/* Keep the arrays and plans around from last time, since this
 	is a very common case. Reallocate them if they change. */
 
-	if (len != planlen && planlen > 0) {
-		fftw_destroy_plan(p1);
-		fftw_destroy_plan(p2);
-		fftw_free(h);
-		fftw_free(H);
-		fftw_free(G);
-		free(g);
-		planlen = 0;
+	if (len != st_planlen && st_planlen > 0) {
+		fftw_destroy_plan(st_p1);
+		fftw_destroy_plan(st_p2);
+		fftw_free(st_h);
+		fftw_free(st_H);
+		fftw_free(st_G);
+		free(st_g);
+		st_planlen = 0;
 	}
 
-	if (planlen == 0) {
-		planlen = len;
-		h = fftw_malloc(sizeof(fftw_complex) * len);
-		H = fftw_malloc(sizeof(fftw_complex) * len);
-		G = fftw_malloc(sizeof(fftw_complex) * len);
-		g = (double *)malloc(sizeof(double) * len);
+	if (st_planlen == 0) {
+		st_planlen = len;
+		st_h = fftw_malloc(sizeof(fftw_complex) * len);
+		st_H = fftw_malloc(sizeof(fftw_complex) * len);
+		st_G = fftw_malloc(sizeof(fftw_complex) * len);
+		st_g = (double *)malloc(sizeof(double) * len);
+		/* Zero-initialize for safety. */
+		memset(st_h, 0, sizeof(fftw_complex) * len);
+		memset(st_H, 0, sizeof(fftw_complex) * len);
+		memset(st_G, 0, sizeof(fftw_complex) * len);
+		memset(st_g, 0, sizeof(double) * len);
 
-		/* Get any accumulated wisdom. */
-
-		set_wisfile();
-		wisdom = fopen(Wisfile, "r");
-		if (wisdom) {
-			fftw_import_wisdom_from_file(wisdom);
-			fclose(wisdom);
-		}
 
 		/* Set up the fftw plans. */
 
-		p1 = fftw_plan_dft_1d(len, h, H, FFTW_FORWARD, FFTW_MEASURE);
-		p2 = fftw_plan_dft_1d(len, G, h, FFTW_BACKWARD, FFTW_MEASURE);
-
-		/* Save the wisdom. */
-
-		wisdom = fopen(Wisfile, "w");
-		if (wisdom) {
-			fftw_export_wisdom_to_file(wisdom);
-			fclose(wisdom);
-		}
+		st_p1 = fftw_plan_dft_1d(len, st_h, st_H, FFTW_FORWARD, FFTW_ESTIMATE);
+		st_p2 = fftw_plan_dft_1d(len, st_G, st_h, FFTW_BACKWARD, FFTW_ESTIMATE);
 	}
 
 	/* Convert the input to complex. Also compute the mean. */
 
 	s = 0.;
-	memset(h, 0, sizeof(fftw_complex) * len);
+	memset(st_h, 0, sizeof(fftw_complex) * len);
 	for (i = 0; i < len; i++) {
-		h[i][0] = data[i];
+		st_h[i][0] = data[i];
 		s += data[i];
 	}
 	s /= len;
 
 	/* FFT. */
 
-	fftw_execute(p1); /* h -> H */
+	fftw_execute(st_p1); /* h -> H */
 
 	/* Hilbert transform. The upper half-circle gets multiplied by
 	two, and the lower half-circle gets set to zero.  The real axis
@@ -160,13 +188,13 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 
 	l2 = (len + 1) / 2;
 	for (i = 1; i < l2; i++) {
-		H[i][0] *= 2.;
-		H[i][1] *= 2.;
+		st_H[i][0] *= 2.;
+		st_H[i][1] *= 2.;
 	}
 	l2 = len / 2 + 1;
 	for (i = l2; i < len; i++) {
-		H[i][0] = 0.;
-		H[i][1] = 0.;
+		st_H[i][0] = 0.;
+		st_H[i][1] = 0.;
 	}
 
 	/* Fill in rows of the result. */
@@ -192,26 +220,26 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 		/* Scale the FFT of the gaussian. Negative frequencies
 		wrap around. */
 
-		g[0] = (*window_function)(n, 0, gamma);
+		st_g[0] = (*window_function)(n, 0, gamma);
 		l2 = len / 2 + 1;
 		for (i = 1; i < l2; i++) {
-			g[i] = g[len - i] = (*window_function)(n, i, gamma);
+			st_g[i] = st_g[len - i] = (*window_function)(n, i, gamma);
 		}
 
 		for (i = 0; i < len; i++) {
-			s = g[i];
+			s = st_g[i];
 			k = n + i;
 			if (k >= len) k -= len;
-			G[i][0] = H[k][0] * s;
-			G[i][1] = H[k][1] * s;
+			st_G[i][0] = st_H[k][0] * s;
+			st_G[i][1] = st_H[k][1] * s;
 		}
 
 		/* Inverse FFT the result to get the next row. */
 
-		fftw_execute(p2); /* G -> h */
+		fftw_execute(st_p2); /* G -> h */
 		for (i = 0; i < len; i++) {
-			*p++ = h[i][0] / len;
-			*p++ = h[i][1] / len;
+			*p++ = st_h[i][0] / len;
+			*p++ = st_h[i][1] / len;
 		}
 
 		/* Go to the next row. */
@@ -246,10 +274,6 @@ void ist(int len, int lo, int hi, double *data, double *result)
 {
 	int i, n, l2;
 	double *p;
-	FILE *wisdom;
-	static int planlen = 0;
-	static fftw_plan p2;
-	static fftw_complex *h, *H;
 
 	/* Check for frequency defaults. */
 
@@ -260,48 +284,34 @@ void ist(int len, int lo, int hi, double *data, double *result)
 	/* Keep the arrays and plans around from last time, since this
 	is a very common case. Reallocate them if they change. */
 
-	if (len != planlen && planlen > 0) {
-		fftw_destroy_plan(p2);
-		fftw_free(h);
-		fftw_free(H);
-		planlen = 0;
+	if (len != ist_planlen && ist_planlen > 0) {
+		fftw_destroy_plan(ist_p2);
+		fftw_free(ist_h);
+		fftw_free(ist_H);
+		ist_planlen = 0;
 	}
 
-	if (planlen == 0) {
-		planlen = len;
-		h = fftw_malloc(sizeof(fftw_complex) * len);
-		H = fftw_malloc(sizeof(fftw_complex) * len);
+	if (ist_planlen == 0) {
+		ist_planlen = len;
+		ist_h = fftw_malloc(sizeof(fftw_complex) * len);
+		ist_H = fftw_malloc(sizeof(fftw_complex) * len);
+		memset(ist_h, 0, sizeof(fftw_complex) * len);
+		memset(ist_H, 0, sizeof(fftw_complex) * len);
 
-		/* Get any accumulated wisdom. */
-
-		set_wisfile();
-		wisdom = fopen(Wisfile, "r");
-		if (wisdom) {
-			fftw_import_wisdom_from_file(wisdom);
-			fclose(wisdom);
-		}
 
 		/* Set up the fftw plans. */
 
-		p2 = fftw_plan_dft_1d(len, H, h, FFTW_BACKWARD, FFTW_MEASURE);
-
-		/* Save the wisdom. */
-
-		wisdom = fopen(Wisfile, "w");
-		if (wisdom) {
-			fftw_export_wisdom_to_file(wisdom);
-			fclose(wisdom);
-		}
+		ist_p2 = fftw_plan_dft_1d(len, ist_H, ist_h, FFTW_BACKWARD, FFTW_ESTIMATE);
 	}
 
 	/* Sum the complex array across time. */
 
-	memset(H, 0, sizeof(fftw_complex) * len);
+	memset(ist_H, 0, sizeof(fftw_complex) * len);
 	p = data;
 	for (n = lo; n <= hi; n++) {
 		for (i = 0; i < len; i++) {
-			H[n][0] += *p++;
-			H[n][1] += *p++;
+			ist_H[n][0] += *p++;
+			ist_H[n][1] += *p++;
 		}
 	}
 
@@ -309,21 +319,21 @@ void ist(int len, int lo, int hi, double *data, double *result)
 
 	l2 = (len + 1) / 2;
 	for (i = 1; i < l2; i++) {
-		H[i][0] /= 2.;
-		H[i][1] /= 2.;
+		ist_H[i][0] /= 2.;
+		ist_H[i][1] /= 2.;
 	}
 	l2 = len / 2 + 1;
 	for (i = l2; i < len; i++) {
-		H[i][0] = H[len - i][0];
-		H[i][1] = -H[len - i][1];
+		ist_H[i][0] = ist_H[len - i][0];
+		ist_H[i][1] = -ist_H[len - i][1];
 	}
 
 	/* Inverse FFT. */
 
-	fftw_execute(p2); /* H -> h */
+	fftw_execute(ist_p2); /* H -> h */
 	p = result;
 	for (i = 0; i < len; i++) {
-		*p++ = h[i][0] / len;
+		*p++ = ist_h[i][0] / len;
 	}
 }
 
@@ -339,60 +349,42 @@ void hilbert(int len, double *data, double *result)
 {
 	int i, l2;
 	double *p;
-	FILE *wisdom;
-	static int planlen = 0;
-	static fftw_plan p1, p2;
-	static fftw_complex *h, *H;
 
 	/* Keep the arrays and plans around from last time, since this
 	is a very common case. Reallocate them if they change. */
 
-	if (len != planlen && planlen > 0) {
-		fftw_destroy_plan(p1);
-		fftw_destroy_plan(p2);
-		fftw_free(h);
-		fftw_free(H);
-		planlen = 0;
+	if (len != hilbert_planlen && hilbert_planlen > 0) {
+		fftw_destroy_plan(hilbert_p1);
+		fftw_destroy_plan(hilbert_p2);
+		fftw_free(hilbert_h);
+		fftw_free(hilbert_H);
+		hilbert_planlen = 0;
 	}
 
-	if (planlen == 0) {
-		planlen = len;
-		h = fftw_malloc(sizeof(fftw_complex) * len);
-		H = fftw_malloc(sizeof(fftw_complex) * len);
+	if (hilbert_planlen == 0) {
+		hilbert_planlen = len;
+		hilbert_h = fftw_malloc(sizeof(fftw_complex) * len);
+		hilbert_H = fftw_malloc(sizeof(fftw_complex) * len);
+		memset(hilbert_h, 0, sizeof(fftw_complex) * len);
+		memset(hilbert_H, 0, sizeof(fftw_complex) * len);
 
-		/* Get any accumulated wisdom. */
-
-		set_wisfile();
-		wisdom = fopen(Wisfile, "r");
-		if (wisdom) {
-			fftw_import_wisdom_from_file(wisdom);
-			fclose(wisdom);
-		}
 
 		/* Set up the fftw plans. */
 
-		p1 = fftw_plan_dft_1d(len, h, H, FFTW_FORWARD, FFTW_MEASURE);
-		p2 = fftw_plan_dft_1d(len, H, h, FFTW_BACKWARD, FFTW_MEASURE);
-
-		/* Save the wisdom. */
-
-		wisdom = fopen(Wisfile, "w");
-		if (wisdom) {
-			fftw_export_wisdom_to_file(wisdom);
-			fclose(wisdom);
-		}
+		hilbert_p1 = fftw_plan_dft_1d(len, hilbert_h, hilbert_H, FFTW_FORWARD, FFTW_ESTIMATE);
+		hilbert_p2 = fftw_plan_dft_1d(len, hilbert_H, hilbert_h, FFTW_BACKWARD, FFTW_ESTIMATE);
 	}
 
 	/* Convert the input to complex. */
 
-	memset(h, 0, sizeof(fftw_complex) * len);
+	memset(hilbert_h, 0, sizeof(fftw_complex) * len);
 	for (i = 0; i < len; i++) {
-		h[i][0] = data[i];
+		hilbert_h[i][0] = data[i];
 	}
 
 	/* FFT. */
 
-	fftw_execute(p1); /* h -> H */
+	fftw_execute(hilbert_p1); /* h -> H */
 
 	/* Hilbert transform. The upper half-circle gets multiplied by
 	two, and the lower half-circle gets set to zero.  The real axis
@@ -400,24 +392,24 @@ void hilbert(int len, double *data, double *result)
 
 	l2 = (len + 1) / 2;
 	for (i = 1; i < l2; i++) {
-		H[i][0] *= 2.;
-		H[i][1] *= 2.;
+		hilbert_H[i][0] *= 2.;
+		hilbert_H[i][1] *= 2.;
 	}
 	l2 = len / 2 + 1;
 	for (i = l2; i < len; i++) {
-		H[i][0] = 0.;
-		H[i][1] = 0.;
+		hilbert_H[i][0] = 0.;
+		hilbert_H[i][1] = 0.;
 	}
 
 	/* Inverse FFT. */
 
-	fftw_execute(p2); /* H -> h */
+	fftw_execute(hilbert_p2); /* H -> h */
 
 	/* Fill in the rows of the result. */
 
 	p = result;
 	for (i = 0; i < len; i++) {
-		*p++ = h[i][0] / len;
-		*p++ = h[i][1] / len;
+		*p++ = hilbert_h[i][0] / len;
+		*p++ = hilbert_h[i][1] / len;
 	}
 }

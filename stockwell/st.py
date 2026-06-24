@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """
-st.py
+st.py.
 
 This file is part of the Stockwell project.
 
@@ -11,11 +11,15 @@ This file is part of the Stockwell project.
     GNU General Public License v3.0 or later.
     (https://www.gnu.org/licenses/gpl-3.0.html)
 """
+import atexit
 from ctypes import CDLL, POINTER, c_int, c_uint, c_double, c_void_p
 import numpy as np
 from .lib_path import get_lib_path
 
 lib_st = CDLL(get_lib_path('st'))
+lib_st.st_cleanup.argtypes = []
+lib_st.st_cleanup.restype = c_void_p
+atexit.register(lib_st.st_cleanup)
 lib_st.st.argtypes = [
     c_int,  # len
     c_int,  # lo
@@ -44,7 +48,7 @@ lib_st.hilbert.restype = c_void_p
 
 def st(data, lo=0, hi=None, gamma=1, win_type='gauss'):
     """
-    Returns the 2d, complex Stockwell transform of the real array ``data``.
+    Return the 2d, complex Stockwell transform of the real array ``data``.
 
     Parameters
     ----------
@@ -88,6 +92,8 @@ def st(data, lo=0, hi=None, gamma=1, win_type='gauss'):
     if data.ndim != 1:
         raise ValueError('x must be a scalar or a 1d array')
     ntimes = len(data)
+    if ntimes == 0:
+        raise ValueError('data must not be empty')
     if hi is None:
         hi = ntimes // 2
     if not isinstance(hi, int) or not isinstance(lo, int):
@@ -109,7 +115,7 @@ def st(data, lo=0, hi=None, gamma=1, win_type='gauss'):
 
 def ist(data, lo=0, hi=None):
     """
-    Returns the inverse Stockwell transform of the 2d, complex array ``data``.
+    Return the inverse Stockwell transform of the 2d, complex array ``data``.
 
     Parameters
     ----------
@@ -139,6 +145,8 @@ def ist(data, lo=0, hi=None):
     if data.ndim != 2:
         raise ValueError('data must be a 2d array')
     nfreqs, ntimes = data.shape
+    if ntimes == 0:
+        raise ValueError('data must not be empty')
     if hi is None:
         hi = ntimes // 2
     if not isinstance(hi, int) or not isinstance(lo, int):
@@ -158,7 +166,7 @@ def ist(data, lo=0, hi=None):
 
 def hilbert(data):
     """
-    Returns the complex Hilbert transform of the real array ``data``.
+    Return the complex Hilbert transform of the real array ``data``.
 
     Parameters
     ----------
@@ -174,6 +182,8 @@ def hilbert(data):
     if data.ndim != 1:
         raise ValueError('data must be a scalar or a 1d array')
     ntimes = len(data)
+    if ntimes == 0:
+        raise ValueError('data must not be empty')
     result = np.zeros(ntimes, dtype=np.complex128)
     lib_st.hilbert(
         ntimes,

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """
-sine.py
+sine.py.
 
 This file is part of the Stockwell project.
 
@@ -26,7 +26,7 @@ lib_sine.sine_taper.restype = c_void_p
 
 def sine_taper(K, N):
     """
-    Returns the Kth sine taper of length N.
+    Return the Kth sine taper of length N.
 
     Parameters
     ----------
@@ -46,6 +46,8 @@ def sine_taper(K, N):
     """
     if not isinstance(K, int) or not isinstance(N, int):
         raise ValueError('K and N must be integers')
+    if N <= 0:
+        raise ValueError('N must be positive')
     result = np.zeros(N, dtype=np.double)
     lib_sine.sine_taper(K, N, result.ctypes.data_as(POINTER(c_double)))
     return result
