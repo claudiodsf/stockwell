@@ -18,5 +18,8 @@ RELEASE-VERSION
 .directory
 .DS_Store
 
+# Sphinx docs
+docs/_build/
+
 # IDE
 .vscode

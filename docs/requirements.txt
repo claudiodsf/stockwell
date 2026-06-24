@@ -1,0 +1,4 @@
+docutils>=0.19
+sphinxcontrib-bibtex
+sphinx-mdinclude
+sphinx_rtd_theme>1

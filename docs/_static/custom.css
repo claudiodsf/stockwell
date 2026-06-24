@@ -1,0 +1,6 @@
+/* Custom styles for stockwell documentation */
+
+/* Hide bibliography backlinks */
+span.backrefs {
+    display: none;
+}
