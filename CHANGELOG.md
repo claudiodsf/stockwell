@@ -16,6 +16,12 @@ Based on original code from [NIMH MEG Core Facility].
 - Validate inputs: reject empty arrays and non-integer parameters
 - Fix FFTW static plan caching to prevent segfault at exit
 - New tests: input validation, kazemi window, roundtrip, chirp example
+- Fix Hilbert phase: avoid shifting the Hilbert transform in frequency when
+  multiplying by the Gaussian window, so that the correct instantaneous phase
+  is preserved in the Stockwell spectrum (issue #9)
+- Fix inverse Stockwell transform to match the phase-corrected forward
+  transform
+- New tests: phase monotonicity and phase step
 
 ## v1.2 - 2025-01-08
 

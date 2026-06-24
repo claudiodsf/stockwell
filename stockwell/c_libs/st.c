@@ -229,12 +229,12 @@ void st(int len, int lo, int hi, double gamma, enum WINDOW window_code, double *
 			st_g[i] = st_g[len - i] = (*window_function)(n, i, gamma);
 		}
 
+		k = len - n;
 		for (i = 0; i < len; i++) {
-			s = st_g[i];
-			k = n + i;
 			if (k >= len) k -= len;
-			st_G[i][0] = st_H[k][0] * s;
-			st_G[i][1] = st_H[k][1] * s;
+			s = st_g[k++];
+			st_G[i][0] = st_H[i][0] * s;
+			st_G[i][1] = st_H[i][1] * s;
 		}
 
 		/* Inverse FFT the result to get the next row. */
@@ -277,6 +277,7 @@ void ist(int len, int lo, int hi, double *data, double *result)
 {
 	int i, n, l2;
 	double *p;
+	double fr, fi, dr, di, ef;
 
 	/* Check for frequency defaults. */
 
@@ -307,14 +308,22 @@ void ist(int len, int lo, int hi, double *data, double *result)
 		ist_p2 = fftw_plan_dft_1d(len, ist_H, ist_h, FFTW_BACKWARD, FFTW_ESTIMATE);
 	}
 
-	/* Sum the complex array across time. */
+	/* Sum the complex array across time, multiplying by
+	   complex exponential factor to perform the frequency
+	   shift required for the inverse. */
 
 	memset(ist_H, 0, sizeof(fftw_complex) * len);
 	p = data;
 	for (n = lo; n <= hi; n++) {
 		for (i = 0; i < len; i++) {
-			ist_H[n][0] += *p++;
-			ist_H[n][1] += *p++;
+			double dr, di, ef, fr, fi;
+			dr = *p++;
+			di = *p++;
+			ef = -2 * M_PI * n * i / len;
+			fr = cos(ef);
+			fi = sin(ef);
+			ist_H[n][0] += dr * fr - di * fi;
+			ist_H[n][1] += dr * fi + di * fr;
 		}
 	}
 

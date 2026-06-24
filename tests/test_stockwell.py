@@ -50,7 +50,7 @@ class TestStockwellTransform(unittest.TestCase):
         array = np.array([0, 1])
         stock_expected = np.array([
             [0.5 + 0.j, 0.5 + 0.j],
-            [-0.5 + 0.j, -0.5 + 0.j]
+            [-0.5 + 0.j, 0.5 + 0.j]
         ])
         stock = self.st.st(array)
         assert_allclose(stock, stock_expected)
@@ -87,6 +87,55 @@ class TestStockwellTransform(unittest.TestCase):
         stock = self.st.st(data)
         recovered = self.st.ist(stock)
         assert_allclose(recovered, data, atol=1e-12)
+
+    def test_st_phase_monotonic(self):
+        """Test that the Hilbert phase is correct for a pure sinusoid.
+
+        For a pure sine wave, the instantaneous phase at each
+        frequency should be linearly increasing in time.
+        """
+        n = 256
+        t = np.arange(n, dtype=float)
+        freq = 10  # cycles per signal length
+        signal = np.sin(2 * np.pi * freq * t / n)
+        stock = self.st.st(signal)
+        # Look at the phase at the fundamental frequency
+        phase = np.unwrap(np.angle(stock[freq, :]))
+        # Phase should be monotonically increasing (or decreasing)
+        # Check that it's not constant
+        self.assertGreater(np.std(phase), 0.1)
+        # Check correlation with a linear ramp is high
+        linear = np.linspace(0, 1, n)
+        corr = np.abs(np.corrcoef(phase, linear)[0, 1])
+        self.assertGreater(corr, 0.95)
+
+    def test_st_phase_step(self):
+        """Test phase behavior with a time-shifted impulse.
+
+        For a delta at position t0, the Hilbert instantaneous
+        phase at time t0 should be zero at all frequencies
+        (the signal is real and positive there). The phase
+        step between adjacent time samples should be
+        proportional to frequency.
+        """
+        n = 128
+        t0 = 32
+        signal = np.zeros(n)
+        signal[t0] = 1.0
+        stock = self.st.st(signal)
+        for f in [5, 10, 20]:
+            phase = np.angle(stock[f, :])
+            # Phase at the impulse location should be zero
+            self.assertAlmostEqual(
+                phase[t0], 0.0, places=10,
+                msg=f'Phase not zero at t0 for freq {f}')
+            # Phase step should be proportional to frequency
+            # (unwrapping to handle phase jumps)
+            phase_step = np.abs(phase[t0 + 1] - phase[t0])
+            expected_step = 2 * np.pi * f / n
+            self.assertAlmostEqual(
+                phase_step, expected_step, places=2,
+                msg=f'Phase step mismatch at freq {f}')
 
     def test_st_readme_chirp(self):
         """Test the chirp example from the README."""
@@ -127,7 +176,7 @@ class TestInverseStockwell(unittest.TestCase):
         """Test ist with the minimal 2x2 matrix."""
         stock = np.array([
             [0.5 + 0.j, 0.5 + 0.j],
-            [-0.5 + 0.j, -0.5 + 0.j]
+            [-0.5 + 0.j, 0.5 + 0.j]
         ])
         array_expected = np.array([0, 1])
         array = self.st.ist(stock)
